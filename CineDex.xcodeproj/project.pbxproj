@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		77E2D1852B857ECB00E996E4 /* CineDexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D1842B857ECB00E996E4 /* CineDexApp.swift */; };
-		77E2D1872B857ECB00E996E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D1862B857ECB00E996E4 /* ContentView.swift */; };
+		77E2D1872B857ECB00E996E4 /* MoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D1862B857ECB00E996E4 /* MoviesView.swift */; };
 		77E2D1892B857ECD00E996E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77E2D1882B857ECD00E996E4 /* Assets.xcassets */; };
 		77E2D18C2B857ECD00E996E4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77E2D18B2B857ECD00E996E4 /* Preview Assets.xcassets */; };
 		77E2D18E2B857ECD00E996E4 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D18D2B857ECD00E996E4 /* Persistence.swift */; };
@@ -16,6 +16,11 @@
 		77E2D19B2B857ECE00E996E4 /* CineDexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D19A2B857ECE00E996E4 /* CineDexTests.swift */; };
 		77E2D1A52B857ECE00E996E4 /* CineDexUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D1A42B857ECE00E996E4 /* CineDexUITests.swift */; };
 		77E2D1A72B857ECE00E996E4 /* CineDexUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D1A62B857ECE00E996E4 /* CineDexUITestsLaunchTests.swift */; };
+		77E2D1B42B857F2000E996E4 /* APIFetchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D1B32B857F2000E996E4 /* APIFetchHandler.swift */; };
+		77E2D1B72B857F3100E996E4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 77E2D1B62B857F3100E996E4 /* Alamofire */; };
+		77E2D1F42B85A90800E996E4 /* MovieDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D1F32B85A90800E996E4 /* MovieDetailView.swift */; };
+		77E2D1F62B85B34D00E996E4 /* MoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D1F52B85B34D00E996E4 /* MoviesViewModel.swift */; };
+		77E2D1F82B85C87700E996E4 /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D1F72B85C87700E996E4 /* MovieDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +43,7 @@
 /* Begin PBXFileReference section */
 		77E2D1812B857ECB00E996E4 /* CineDex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CineDex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E2D1842B857ECB00E996E4 /* CineDexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CineDexApp.swift; sourceTree = "<group>"; };
-		77E2D1862B857ECB00E996E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		77E2D1862B857ECB00E996E4 /* MoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesView.swift; sourceTree = "<group>"; };
 		77E2D1882B857ECD00E996E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77E2D18B2B857ECD00E996E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		77E2D18D2B857ECD00E996E4 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -48,6 +53,10 @@
 		77E2D1A02B857ECE00E996E4 /* CineDexUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CineDexUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E2D1A42B857ECE00E996E4 /* CineDexUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CineDexUITests.swift; sourceTree = "<group>"; };
 		77E2D1A62B857ECE00E996E4 /* CineDexUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CineDexUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		77E2D1B32B857F2000E996E4 /* APIFetchHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIFetchHandler.swift; sourceTree = "<group>"; };
+		77E2D1F32B85A90800E996E4 /* MovieDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailView.swift; sourceTree = "<group>"; };
+		77E2D1F52B85B34D00E996E4 /* MoviesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesViewModel.swift; sourceTree = "<group>"; };
+		77E2D1F72B85C87700E996E4 /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77E2D1B72B857F3100E996E4 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,11 +109,15 @@
 			isa = PBXGroup;
 			children = (
 				77E2D1842B857ECB00E996E4 /* CineDexApp.swift */,
-				77E2D1862B857ECB00E996E4 /* ContentView.swift */,
-				77E2D1882B857ECD00E996E4 /* Assets.xcassets */,
+				77E2D1862B857ECB00E996E4 /* MoviesView.swift */,
+				77E2D1F52B85B34D00E996E4 /* MoviesViewModel.swift */,
 				77E2D18D2B857ECD00E996E4 /* Persistence.swift */,
+				77E2D1882B857ECD00E996E4 /* Assets.xcassets */,
 				77E2D18F2B857ECD00E996E4 /* CineDex.xcdatamodeld */,
 				77E2D18A2B857ECD00E996E4 /* Preview Content */,
+				77E2D1B32B857F2000E996E4 /* APIFetchHandler.swift */,
+				77E2D1F32B85A90800E996E4 /* MovieDetailView.swift */,
+				77E2D1F72B85C87700E996E4 /* MovieDetailViewModel.swift */,
 			);
 			path = CineDex;
 			sourceTree = "<group>";
@@ -149,6 +163,9 @@
 			dependencies = (
 			);
 			name = CineDex;
+			packageProductDependencies = (
+				77E2D1B62B857F3100E996E4 /* Alamofire */,
+			);
 			productName = CineDex;
 			productReference = 77E2D1812B857ECB00E996E4 /* CineDex.app */;
 			productType = "com.apple.product-type.application";
@@ -221,6 +238,9 @@
 				Base,
 			);
 			mainGroup = 77E2D1782B857ECA00E996E4;
+			packageReferences = (
+				77E2D1B52B857F3100E996E4 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 77E2D1822B857ECB00E996E4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -263,9 +283,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77E2D1F42B85A90800E996E4 /* MovieDetailView.swift in Sources */,
 				77E2D1912B857ECD00E996E4 /* CineDex.xcdatamodeld in Sources */,
+				77E2D1B42B857F2000E996E4 /* APIFetchHandler.swift in Sources */,
 				77E2D18E2B857ECD00E996E4 /* Persistence.swift in Sources */,
-				77E2D1872B857ECB00E996E4 /* ContentView.swift in Sources */,
+				77E2D1F82B85C87700E996E4 /* MovieDetailViewModel.swift in Sources */,
+				77E2D1F62B85B34D00E996E4 /* MoviesViewModel.swift in Sources */,
+				77E2D1872B857ECB00E996E4 /* MoviesView.swift in Sources */,
 				77E2D1852B857ECB00E996E4 /* CineDexApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -596,6 +620,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		77E2D1B52B857F3100E996E4 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		77E2D1B62B857F3100E996E4 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77E2D1B52B857F3100E996E4 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		77E2D18F2B857ECD00E996E4 /* CineDex.xcdatamodeld */ = {
