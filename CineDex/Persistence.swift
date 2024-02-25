@@ -55,6 +55,14 @@ struct PersistenceController {
         // Set up relationships for Metadata and Specification
         movie.metadata = createMetadata(from: movieInfo.metadata, in: viewContext)
         movie.specification = createSpecification(from: movieInfo.specification, in: viewContext)
+        let directorsInfo = movieInfo.directors
+        for directorInfo in directorsInfo {
+          movie.addToDirectors(createOrFindDirector(from: directorInfo, in: viewContext))
+        }
+        let genresInfo = movieInfo.genres
+        for genreInfo in genresInfo {
+          movie.addToGenres(createOrFindGenre(from: genreInfo, in: viewContext))
+        }
       }
       
       do {
@@ -65,6 +73,82 @@ struct PersistenceController {
         fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
       }
     }
+  }
+  
+  private func createOrFindDirector(from directorInfo: DirectorInfo, in context: NSManagedObjectContext) -> Director {
+    let personName = directorInfo.person.name
+    
+    // Check if the director already exists
+    let existingDirectorFetchRequest: NSFetchRequest<Director> = Director.fetchRequest()
+    existingDirectorFetchRequest.predicate = NSPredicate(format: "person.name == %@", personName)
+    
+    do {
+      let existingDirectors = try context.fetch(existingDirectorFetchRequest)
+      
+      if let existingDirector = existingDirectors.first {
+        return existingDirector // Director already exists, return it
+      }
+    } catch {
+      print("Error fetching existing directors: \(error)")
+    }
+    
+    // If the director does not exist, create a new one
+    let newDirector = Director(context: context)
+    
+    newDirector.id = directorInfo.id
+    newDirector.createdAt = directorInfo.createdAt
+    newDirector.updatedAt = directorInfo.updatedAt
+    newDirector.person = createOrFindPerson(from: directorInfo.person, in: context)
+    
+    return newDirector
+  }
+  
+  private func createOrFindGenre(from genreInfo: GenreInfo, in context: NSManagedObjectContext) -> Genre {
+    let existingGenresFetchRequest: NSFetchRequest<Genre> = Genre.fetchRequest()
+    existingGenresFetchRequest.predicate = NSPredicate(format: "name == %@", genreInfo.name)
+    
+    do {
+      let existingGenres = try context.fetch(existingGenresFetchRequest)
+      
+      if let existingGenre = existingGenres.first {
+        return existingGenre // Genre already exists, return it
+      }
+    } catch {
+      print("Error fetching existing genres: \(error)")
+    }
+    
+    let newGenre = Genre(context: context)
+    
+    newGenre.id = genreInfo.id
+    newGenre.createdAt = genreInfo.createdAt
+    newGenre.updatedAt = genreInfo.updatedAt
+    newGenre.name = genreInfo.name
+    
+    return newGenre
+  }
+  
+  private func createOrFindPerson(from personInfo: PersonInfo, in context: NSManagedObjectContext) -> Person {
+    let existingPersonFetchRequest: NSFetchRequest<Person> = Person.fetchRequest()
+    existingPersonFetchRequest.predicate = NSPredicate(format: "name == %@", personInfo.name)
+    
+    do {
+      let existingPeople = try context.fetch(existingPersonFetchRequest)
+      
+      if let existingPerson = existingPeople.first {
+        return existingPerson // Person already exists, return it
+      }
+    } catch {
+      print("Error fetching existing directors: \(error)")
+    }
+    
+    let newPerson = Person(context: context)
+    
+    newPerson.id = personInfo.id
+    newPerson.createdAt = personInfo.createdAt
+    newPerson.updatedAt = personInfo.updatedAt
+    newPerson.name = personInfo.name
+    
+    return newPerson
   }
   
   // Helper functions to create Metadata and Specification entities

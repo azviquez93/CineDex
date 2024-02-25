@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		778CE0012B868D0E008DF74C /* MoviesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0002B868D0E008DF74C /* MoviesListView.swift */; };
+		778CE0032B868E6D008DF74C /* MoviesGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0022B868E6D008DF74C /* MoviesGridView.swift */; };
+		778CE0052B86CE7B008DF74C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0042B86CE7B008DF74C /* MainView.swift */; };
+		778CE0072B86DB1B008DF74C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0062B86DB1B008DF74C /* SettingsView.swift */; };
+		778CE00A2B86F97A008DF74C /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0092B86F97A008DF74C /* Appearance.swift */; };
+		778CE00C2B86FC8C008DF74C /* MoviesViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE00B2B86FC8C008DF74C /* MoviesViewStyle.swift */; };
+		778CE00E2B87158B008DF74C /* FilterOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE00D2B87158B008DF74C /* FilterOptionsView.swift */; };
+		778CE0112B8719C9008DF74C /* FilterOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0102B8719C9008DF74C /* FilterOptionView.swift */; };
+		778CE0142B871C31008DF74C /* DirectorsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0132B871C31008DF74C /* DirectorsListView.swift */; };
+		778CE0162B871CB7008DF74C /* GenresListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0152B871CB7008DF74C /* GenresListView.swift */; };
+		77D176172B886678000CC8DB /* GenresListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D176162B886678000CC8DB /* GenresListViewModel.swift */; };
 		77E2D1852B857ECB00E996E4 /* CineDexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D1842B857ECB00E996E4 /* CineDexApp.swift */; };
 		77E2D1872B857ECB00E996E4 /* MoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D1862B857ECB00E996E4 /* MoviesView.swift */; };
 		77E2D1892B857ECD00E996E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77E2D1882B857ECD00E996E4 /* Assets.xcassets */; };
@@ -41,6 +52,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		778CE0002B868D0E008DF74C /* MoviesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListView.swift; sourceTree = "<group>"; };
+		778CE0022B868E6D008DF74C /* MoviesGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesGridView.swift; sourceTree = "<group>"; };
+		778CE0042B86CE7B008DF74C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		778CE0062B86DB1B008DF74C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		778CE0092B86F97A008DF74C /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		778CE00B2B86FC8C008DF74C /* MoviesViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesViewStyle.swift; sourceTree = "<group>"; };
+		778CE00D2B87158B008DF74C /* FilterOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionsView.swift; sourceTree = "<group>"; };
+		778CE0102B8719C9008DF74C /* FilterOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionView.swift; sourceTree = "<group>"; };
+		778CE0132B871C31008DF74C /* DirectorsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorsListView.swift; sourceTree = "<group>"; };
+		778CE0152B871CB7008DF74C /* GenresListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresListView.swift; sourceTree = "<group>"; };
+		77D176162B886678000CC8DB /* GenresListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresListViewModel.swift; sourceTree = "<group>"; };
 		77E2D1812B857ECB00E996E4 /* CineDex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CineDex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E2D1842B857ECB00E996E4 /* CineDexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CineDexApp.swift; sourceTree = "<group>"; };
 		77E2D1862B857ECB00E996E4 /* MoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesView.swift; sourceTree = "<group>"; };
@@ -85,6 +107,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		778CE0082B86F96C008DF74C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				778CE0092B86F97A008DF74C /* Appearance.swift */,
+				778CE00B2B86FC8C008DF74C /* MoviesViewStyle.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		778CE00F2B8719B6008DF74C /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				778CE00D2B87158B008DF74C /* FilterOptionsView.swift */,
+				778CE0102B8719C9008DF74C /* FilterOptionView.swift */,
+				77D176162B886678000CC8DB /* GenresListViewModel.swift */,
+				778CE0122B871C19008DF74C /* Subviews */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		778CE0122B871C19008DF74C /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				778CE0132B871C31008DF74C /* DirectorsListView.swift */,
+				778CE0152B871CB7008DF74C /* GenresListView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
 		77E2D1782B857ECA00E996E4 = {
 			isa = PBXGroup;
 			children = (
@@ -108,16 +159,22 @@
 		77E2D1832B857ECB00E996E4 /* CineDex */ = {
 			isa = PBXGroup;
 			children = (
+				778CE00F2B8719B6008DF74C /* Filter */,
+				778CE0082B86F96C008DF74C /* Utils */,
 				77E2D1842B857ECB00E996E4 /* CineDexApp.swift */,
+				778CE0002B868D0E008DF74C /* MoviesListView.swift */,
+				778CE0022B868E6D008DF74C /* MoviesGridView.swift */,
 				77E2D1862B857ECB00E996E4 /* MoviesView.swift */,
 				77E2D1F52B85B34D00E996E4 /* MoviesViewModel.swift */,
 				77E2D18D2B857ECD00E996E4 /* Persistence.swift */,
-				77E2D1882B857ECD00E996E4 /* Assets.xcassets */,
-				77E2D18F2B857ECD00E996E4 /* CineDex.xcdatamodeld */,
-				77E2D18A2B857ECD00E996E4 /* Preview Content */,
 				77E2D1B32B857F2000E996E4 /* APIFetchHandler.swift */,
 				77E2D1F32B85A90800E996E4 /* MovieDetailView.swift */,
 				77E2D1F72B85C87700E996E4 /* MovieDetailViewModel.swift */,
+				778CE0042B86CE7B008DF74C /* MainView.swift */,
+				778CE0062B86DB1B008DF74C /* SettingsView.swift */,
+				77E2D1882B857ECD00E996E4 /* Assets.xcassets */,
+				77E2D18F2B857ECD00E996E4 /* CineDex.xcdatamodeld */,
+				77E2D18A2B857ECD00E996E4 /* Preview Content */,
 			);
 			path = CineDex;
 			sourceTree = "<group>";
@@ -283,12 +340,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				778CE0112B8719C9008DF74C /* FilterOptionView.swift in Sources */,
+				778CE0012B868D0E008DF74C /* MoviesListView.swift in Sources */,
 				77E2D1F42B85A90800E996E4 /* MovieDetailView.swift in Sources */,
 				77E2D1912B857ECD00E996E4 /* CineDex.xcdatamodeld in Sources */,
+				77D176172B886678000CC8DB /* GenresListViewModel.swift in Sources */,
 				77E2D1B42B857F2000E996E4 /* APIFetchHandler.swift in Sources */,
+				778CE00A2B86F97A008DF74C /* Appearance.swift in Sources */,
 				77E2D18E2B857ECD00E996E4 /* Persistence.swift in Sources */,
+				778CE0032B868E6D008DF74C /* MoviesGridView.swift in Sources */,
+				778CE0162B871CB7008DF74C /* GenresListView.swift in Sources */,
+				778CE00C2B86FC8C008DF74C /* MoviesViewStyle.swift in Sources */,
 				77E2D1F82B85C87700E996E4 /* MovieDetailViewModel.swift in Sources */,
+				778CE0142B871C31008DF74C /* DirectorsListView.swift in Sources */,
+				778CE0052B86CE7B008DF74C /* MainView.swift in Sources */,
 				77E2D1F62B85B34D00E996E4 /* MoviesViewModel.swift in Sources */,
+				778CE00E2B87158B008DF74C /* FilterOptionsView.swift in Sources */,
+				778CE0072B86DB1B008DF74C /* SettingsView.swift in Sources */,
 				77E2D1872B857ECB00E996E4 /* MoviesView.swift in Sources */,
 				77E2D1852B857ECB00E996E4 /* CineDexApp.swift in Sources */,
 			);

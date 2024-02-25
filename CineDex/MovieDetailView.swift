@@ -9,7 +9,6 @@ struct MovieDetailView: View {
   
   var body: some View {
     List {
-      VStack {
         Text(viewModel.movie.metadata?.originalTitle ?? "Unknown Title")
           .font(.title)
           .padding()
@@ -21,13 +20,8 @@ struct MovieDetailView: View {
         Text(viewModel.movie.metadata?.summary ?? "No summary available.")
           .font(.body)
           .padding()
-        
-        // Add more details as needed
-        
-        Spacer()
-      }
-      .navigationBarTitle(viewModel.movie.metadata?.originalTitle ?? "Movie Detail", displayMode: .inline)
     }
+    .listStyle(.plain)
   }
 }
 

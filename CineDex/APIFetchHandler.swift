@@ -15,17 +15,73 @@ final class APIFetchHandler {
       .responseDecodable(of: [MovieInfo].self) { response in
         switch response.result {
         case .success(let movieDataArray):
+          let group = DispatchGroup() // Create a dispatch group
           persistenceController.resetCoreData()
-          persistenceController.batchInsertMovies(movieDataArray) {
-            // Completion handler of batchInsertMovies
-            completion()
+          for movie in movieDataArray {
+            if let artworkURLString = movie.metadata.artwork {
+              group.enter() // Enter the group before downloading artwork
+              self.downloadArtwork(from: artworkURLString) { success in
+                if success {
+                  print("Downloaded artwork for movie ID \(movie.id)")
+                } else {
+                  print("Failed to download artwork for movie ID \(movie.id)")
+                }
+                group.leave() // Leave the group after downloading artwork
+              }
+            }
+          }
+          group.notify(queue: .main) {
+            // This block is called when all tasks in the group have completed
+            persistenceController.batchInsertMovies(movieDataArray) {
+              print("All movies have been inserted into Core Data.")
+              completion()
+            }
           }
         case .failure(let error):
           // Handle the error here
           print("Error: \(error)")
+          completion()
         }
       }
   }
+  
+  private func downloadArtwork(from urlString: String, completion: @escaping (Bool) -> Void) {
+    guard let url = URL(string: "http://192.168.68.101:8000/uploads/movies/artworks/\(urlString)") else {
+      completion(false)
+      return
+    }
+    
+    // Construct the destination file path
+    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    let fileName = url.lastPathComponent
+    let fileURL = documentsDirectory.appendingPathComponent(fileName)
+    
+    // Check if the file already exists at the destination path
+    if FileManager.default.fileExists(atPath: fileURL.path) {
+      print("Image already exists at \(fileURL)")
+      completion(true)
+      return
+    }
+    
+    // If the file doesn't exist, proceed with the download
+    AF.download(url).responseData { response in
+      switch response.result {
+      case .success(let data):
+        do {
+          try data.write(to: fileURL, options: .atomic)
+          completion(true)
+        } catch {
+          print("Error saving image to disk: \(error)")
+          completion(false)
+        }
+      case .failure(let error):
+        // Handle the error here
+        print("Error downloading artwork: \(error)")
+        completion(false)
+      }
+    }
+  }
+  
 }
 
 struct MovieInfo: Codable {
@@ -41,6 +97,8 @@ struct MovieInfo: Codable {
   let studioId: Int?
   let metadata: MetadataInfo
   let specification: SpecificationInfo
+  let directors: [DirectorInfo]
+  let genres: [GenreInfo]
   
   enum CodingKeys: String, CodingKey {
     case id
@@ -55,6 +113,50 @@ struct MovieInfo: Codable {
     case studioId = "studio_id"
     case metadata
     case specification
+    case directors
+    case genres
+  }
+}
+
+struct DirectorInfo: Codable {
+  let id: Int64
+  let createdAt: String
+  let updatedAt: String
+  let person: PersonInfo
+  
+  enum CodingKeys: String, CodingKey {
+    case id
+    case createdAt = "created_at"
+    case updatedAt = "updated_at"
+    case person
+  }
+}
+
+struct GenreInfo: Codable {
+  let id: Int64
+  let createdAt: String
+  let updatedAt: String
+  let name: String
+  
+  enum CodingKeys: String, CodingKey {
+    case id
+    case createdAt = "created_at"
+    case updatedAt = "updated_at"
+    case name
+  }
+}
+
+struct PersonInfo: Codable {
+  let id: Int64
+  let createdAt: String
+  let updatedAt: String
+  let name: String
+  
+  enum CodingKeys: String, CodingKey {
+    case id
+    case createdAt = "created_at"
+    case updatedAt = "updated_at"
+    case name
   }
 }
 
