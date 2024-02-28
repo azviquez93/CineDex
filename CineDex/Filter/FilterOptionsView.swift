@@ -9,8 +9,8 @@ import SwiftUI
 
 struct FilterOptionsView: View {
   
-  @ObservedObject var genresListViewModel: GenresListViewModel
-  @ObservedObject var directorsListViewModel: DirectorsListViewModel
+  @ObservedObject var genresListViewModel = FilterOptionsHandler.shared.genresListViewModel
+  @ObservedObject var directorsListViewModel = FilterOptionsHandler.shared.directorsListViewModel
   @ObservedObject var moviesViewModel: MoviesViewModel
   @Environment(\.dismiss) private var dismiss
   
@@ -33,8 +33,6 @@ struct FilterOptionsView: View {
             Button {
               genresListViewModel.refreshGenres()
               directorsListViewModel.refreshDirectors()
-              moviesViewModel.selectedGenres = genresListViewModel.selectedGenresNames
-              moviesViewModel.selectedDirectors = directorsListViewModel.selectedDirectorsNames
               moviesViewModel.refreshMovies()
             } label: {
                 Text("Restablecer todos")

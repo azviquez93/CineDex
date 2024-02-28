@@ -22,7 +22,7 @@ struct GenresListView: View {
       HStack {
           Button {
             genresListViewModel.refreshGenres()
-            moviesViewModel.selectedGenres = genresListViewModel.selectedGenresNames
+            FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors()
             moviesViewModel.refreshMovies()
           } label: {
               Text("Restablecer")
@@ -55,7 +55,7 @@ struct GenresRow: View {
     .contentShape(Rectangle())
     .onTapGesture {
       genre.selected.toggle()
-      moviesViewModel.selectedGenres = genresListViewModel.selectedGenresNames
+      FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors()
       moviesViewModel.refreshMovies()
     }
   }

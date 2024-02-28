@@ -22,7 +22,6 @@ struct DirectorsListView: View {
       HStack {
           Button {
             directorsListViewModel.refreshDirectors()
-            moviesViewModel.selectedDirectors = directorsListViewModel.selectedDirectorsNames
             moviesViewModel.refreshMovies()
           } label: {
               Text("Restablecer")
@@ -55,7 +54,6 @@ struct DirectorsRow: View {
     .contentShape(Rectangle())
     .onTapGesture {
       director.selected.toggle()
-      moviesViewModel.selectedDirectors = directorsListViewModel.selectedDirectorsNames
       moviesViewModel.refreshMovies()
     }
   }

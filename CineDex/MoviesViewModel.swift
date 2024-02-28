@@ -11,8 +11,6 @@ import CoreData
 @MainActor
 final class MoviesViewModel: ObservableObject {
   
-  @Published var selectedDirectors: [String] = []
-  @Published var selectedGenres: [String] = []
   @Published var movies: [Movie] = []
   @Published var searchText: String = "" {
     didSet {
@@ -70,6 +68,7 @@ final class MoviesViewModel: ObservableObject {
   }
   
   private func genresPredicate() -> NSPredicate? {
+    let selectedGenres = FilterOptionsHandler.shared.genresListViewModel.selectedGenresNames
     guard !selectedGenres.isEmpty else {
       return nil
     }
@@ -77,6 +76,7 @@ final class MoviesViewModel: ObservableObject {
   }
   
   private func directorsPredicate() -> NSPredicate? {
+    let selectedDirectors = FilterOptionsHandler.shared.directorsListViewModel.selectedDirectorsNames
     guard !selectedDirectors.isEmpty else {
       return nil
     }

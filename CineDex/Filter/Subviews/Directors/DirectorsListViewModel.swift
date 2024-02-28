@@ -24,21 +24,37 @@ final class DirectorsListViewModel: ObservableObject {
   func refreshDirectors() {
     let persistenceController = PersistenceController.shared
     let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
-    let genres = ["Short"]
-    fetchRequest.predicate = NSPredicate(format: "ANY genres.genre.name IN %@", genres)
+    
+    let genres = FilterOptionsHandler.shared.genresListViewModel.selectedGenresNames
+    if genres.count > 0 {
+      // If genres are selected, filter movies by these genres
+      fetchRequest.predicate = NSPredicate(format: "ANY genres.genre.name IN %@", genres)
+    } else {
+      // If no genres are selected, do not apply a genre filter
+      fetchRequest.predicate = nil
+    }
+    
     do {
       let moviesWithGenre = try persistenceController.container.viewContext.fetch(fetchRequest)
-      let directorsFetchRequest: NSFetchRequest<MovieDirector> = MovieDirector.fetchRequest()
-      let directorsPredicate = NSPredicate(format: "ANY movie IN %@", moviesWithGenre)
-      directorsFetchRequest.predicate = directorsPredicate
-      let sortDescriptor = NSSortDescriptor(key: "director.person.name", ascending: true)
+      let directorsFetchRequest: NSFetchRequest<Director> = Director.fetchRequest()
+      if genres.count > 0 {
+        // If genres are selected, filter directors by movies with these genres
+        let directorsPredicate = NSPredicate(format: "ANY movies.movie IN %@", moviesWithGenre)
+        directorsFetchRequest.predicate = directorsPredicate
+      } else {
+        // If no genres are selected, do not apply a movie filter
+        directorsFetchRequest.predicate = nil
+      }
+      
+      let sortDescriptor = NSSortDescriptor(key: "person.name", ascending: true)
       directorsFetchRequest.sortDescriptors = [sortDescriptor]
       let moviesDirectorsCD = try persistenceController.container.viewContext.fetch(directorsFetchRequest)
-      directors = moviesDirectorsCD.map { DirectorData(name: $0.director?.person?.name ?? "Unknown Director", selected: false) }
+      directors = moviesDirectorsCD.map { DirectorData(name: $0.person?.name ?? "Unknown Director", selected: false) }
     } catch {
       print("Error fetching directors: \(error)")
     }
   }
+  
   
 }
 

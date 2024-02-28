@@ -11,14 +11,12 @@ import SwiftUI
 struct CineDexApp: App {
   let persistenceController = PersistenceController.shared
   @ObservedObject var moviesViewModel = MoviesViewModel()
-  @ObservedObject var genresListViewModel = GenresListViewModel()
-  @ObservedObject var directorsListViewModel = DirectorsListViewModel()
   @AppStorage("appearance") var appearance: Appearance = .automatic
   @AppStorage("moviesViewStyle") var viewStyle: MoviesViewStyle = .list
   
   var body: some Scene {
     WindowGroup {
-      MainView(moviesViewModel: moviesViewModel, genresListViewModel: genresListViewModel, directorsListViewModel: directorsListViewModel)
+      MainView(moviesViewModel: moviesViewModel)
         .preferredColorScheme(appearance.getColorScheme())
         .environment(\.managedObjectContext, persistenceController.container.viewContext)
     }

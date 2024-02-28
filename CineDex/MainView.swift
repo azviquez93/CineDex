@@ -10,12 +10,10 @@ import SwiftUI
 struct MainView: View {
   
   @ObservedObject var moviesViewModel: MoviesViewModel
-  @ObservedObject var genresListViewModel: GenresListViewModel
-  @ObservedObject var directorsListViewModel: DirectorsListViewModel
   
   var body: some View {
     TabView {
-      MoviesView(moviesViewModel: moviesViewModel, genresListViewModel: genresListViewModel, directorsListViewModel: directorsListViewModel)
+      MoviesView(moviesViewModel: moviesViewModel)
         .tabItem {
           Label("Películas", systemImage: "popcorn")
         }
@@ -26,8 +24,7 @@ struct MainView: View {
         }
     }.onAppear {
       moviesViewModel.refreshMovies()
-      genresListViewModel.refreshGenres()
-      directorsListViewModel.refreshDirectors()
+      FilterOptionsHandler.shared.refreshFilters()
     }
   }
 }
