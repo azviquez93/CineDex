@@ -1,16 +1,16 @@
 import SwiftUI
 
-struct GenresListView: View {
+struct DirectorsListView: View {
   @State private var searchText: String = ""
-  @ObservedObject var genresListViewModel: GenresListViewModel
+  @ObservedObject var directorsListViewModel: DirectorsListViewModel
   @ObservedObject var moviesViewModel: MoviesViewModel
   
   var body: some View {
     VStack {
       List {
-        ForEach($genresListViewModel.genres) { $genre in
-          if searchText.isEmpty || (genre.name.localizedCaseInsensitiveContains(searchText)) {
-            Row(genre: $genre, genresListViewModel: genresListViewModel, moviesViewModel: moviesViewModel)
+        ForEach($directorsListViewModel.directors) { $director in
+          if searchText.isEmpty || (director.name.localizedCaseInsensitiveContains(searchText)) {
+            DirectorsRow(director: $director, directorsListViewModel: directorsListViewModel, moviesViewModel: moviesViewModel)
             //.disabled(true)
             //.foregroundColor(.gray)
           }
@@ -21,8 +21,8 @@ struct GenresListView: View {
       Spacer()
       HStack {
           Button {
-            genresListViewModel.refreshGenres()
-            moviesViewModel.selectedGenres = genresListViewModel.selectedGenresNames
+            directorsListViewModel.refreshDirectors()
+            moviesViewModel.selectedDirectors = directorsListViewModel.selectedDirectorsNames
             moviesViewModel.refreshMovies()
           } label: {
               Text("Restablecer")
@@ -31,21 +31,21 @@ struct GenresListView: View {
           .padding()
       }
     }
-    .navigationTitle("Género")
+    .navigationTitle("Director")
     .navigationBarTitleDisplayMode(.inline)
   }
 }
 
-struct Row: View {
-  @Binding var genre: GenreData
-  @ObservedObject var genresListViewModel: GenresListViewModel
+struct DirectorsRow: View {
+  @Binding var director: DirectorData
+  @ObservedObject var directorsListViewModel: DirectorsListViewModel
   @ObservedObject var moviesViewModel: MoviesViewModel
   
   var body: some View {
     HStack {
-      Text(genre.name)
+      Text(director.name)
       Spacer()
-      if genre.selected {
+      if director.selected {
         Image(systemName: "checkmark")
           .foregroundColor(.blue)
         
@@ -54,8 +54,8 @@ struct Row: View {
     }
     .contentShape(Rectangle())
     .onTapGesture {
-      genre.selected.toggle()
-      moviesViewModel.selectedGenres = genresListViewModel.selectedGenresNames
+      director.selected.toggle()
+      moviesViewModel.selectedDirectors = directorsListViewModel.selectedDirectorsNames
       moviesViewModel.refreshMovies()
     }
   }

@@ -11,6 +11,7 @@ import CoreData
 @MainActor
 final class MoviesViewModel: ObservableObject {
   
+  @Published var selectedDirectors: [String] = []
   @Published var selectedGenres: [String] = []
   @Published var movies: [Movie] = []
   @Published var searchText: String = "" {
@@ -48,8 +49,13 @@ final class MoviesViewModel: ObservableObject {
     }
     
     // Add the genre predicate
-    if let genrePredicate = genrePredicate() {
-      predicates.append(genrePredicate)
+    if let genresPredicate = genresPredicate() {
+      predicates.append(genresPredicate)
+    }
+    
+    // Add the genre predicate
+    if let directorsPredicate = directorsPredicate() {
+      predicates.append(directorsPredicate)
     }
     
     // Combine all predicates using AND
@@ -63,15 +69,19 @@ final class MoviesViewModel: ObservableObject {
     }
   }
   
-  private func genrePredicate() -> NSPredicate? {
+  private func genresPredicate() -> NSPredicate? {
     guard !selectedGenres.isEmpty else {
       return nil
     }
+    return NSPredicate(format: "ANY genres.genre.name IN %@", selectedGenres)
+  }
+  
+  private func directorsPredicate() -> NSPredicate? {
+    guard !selectedDirectors.isEmpty else {
+      return nil
+    }
+    return NSPredicate(format: "ANY directors.director.person.name IN %@", selectedDirectors)
     
-    // Use SUBQUERY to filter movies based on the selected genres
-    let subquery = NSPredicate(format: "SUBQUERY(genres, $genre, $genre.name IN %@).@count > 0", selectedGenres)
-    
-    return subquery
   }
   
 }

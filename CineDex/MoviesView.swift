@@ -11,13 +11,14 @@ struct MoviesView: View {
   @AppStorage("moviesViewStyle") var moviesViewStyle: MoviesViewStyle = .list
   @ObservedObject var moviesViewModel: MoviesViewModel
   @ObservedObject var genresListViewModel: GenresListViewModel
+  @ObservedObject var directorsListViewModel: DirectorsListViewModel
   
   var body: some View {
     switch moviesViewStyle {
     case.list:
-      MoviesListView(genresListViewModel: genresListViewModel, moviesViewModel: moviesViewModel)
+      MoviesListView(genresListViewModel: genresListViewModel, directorsListViewModel: directorsListViewModel, moviesViewModel: moviesViewModel)
     case.grid:
-      MoviesGridView(genresListViewModel: genresListViewModel, moviesViewModel: moviesViewModel)
+      MoviesGridView(directorsListViewModel: directorsListViewModel, genresListViewModel: genresListViewModel, moviesViewModel: moviesViewModel)
     }
   }
 }

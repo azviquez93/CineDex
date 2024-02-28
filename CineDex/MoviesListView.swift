@@ -10,6 +10,7 @@ import SwiftUI
 struct MoviesListView: View {
   
   @ObservedObject var genresListViewModel: GenresListViewModel
+  @ObservedObject var directorsListViewModel: DirectorsListViewModel
   @ObservedObject var moviesViewModel: MoviesViewModel
   @State private var selectedMovieId: Movie.ID?
   @State private var showFilters: Bool = false
@@ -86,7 +87,7 @@ struct MoviesListView: View {
       }
     }
     .sheet(isPresented: $showFilters, content: {
-      FilterOptionsView(genresListViewModel: genresListViewModel, moviesViewModel: moviesViewModel)
+      FilterOptionsView(genresListViewModel: genresListViewModel, directorsListViewModel: directorsListViewModel, moviesViewModel: moviesViewModel)
     })
   }
   

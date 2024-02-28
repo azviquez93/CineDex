@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MoviesGridView: View {
   
+  @ObservedObject var directorsListViewModel: DirectorsListViewModel
   @ObservedObject var genresListViewModel: GenresListViewModel
   @ObservedObject var moviesViewModel: MoviesViewModel
   @State private var showFilters: Bool = false
@@ -81,7 +82,7 @@ struct MoviesGridView: View {
       }
     }
     .sheet(isPresented: $showFilters, content: {
-      FilterOptionsView(genresListViewModel: genresListViewModel, moviesViewModel: moviesViewModel)
+      FilterOptionsView(genresListViewModel: genresListViewModel, directorsListViewModel: directorsListViewModel, moviesViewModel: moviesViewModel)
     })
   }
 }

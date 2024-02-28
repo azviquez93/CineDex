@@ -57,11 +57,19 @@ struct PersistenceController {
         movie.specification = createSpecification(from: movieInfo.specification, in: viewContext)
         let directorsInfo = movieInfo.directors
         for directorInfo in directorsInfo {
-          movie.addToDirectors(createOrFindDirector(from: directorInfo, in: viewContext))
+          let director = createOrFindDirector(from: directorInfo, in: viewContext)
+          let movieDirector = MovieDirector(context: viewContext)
+          movieDirector.director = director
+          movieDirector.movie = movie
+          director.addToMovies(movieDirector)
         }
         let genresInfo = movieInfo.genres
         for genreInfo in genresInfo {
-          movie.addToGenres(createOrFindGenre(from: genreInfo, in: viewContext))
+          let genre = createOrFindGenre(from: genreInfo, in: viewContext)
+          let movieDirector = MovieGenre(context: viewContext)
+          movieDirector.genre = genre
+          movieDirector.movie = movie
+          genre.addToMovies(movieDirector)
         }
       }
       

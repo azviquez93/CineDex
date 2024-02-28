@@ -7,7 +7,7 @@ final class APIFetchHandler {
   
   func fetchAPIData(completion: @escaping () -> Void) {
     
-    let url = "http://192.168.68.101:8000/api/v1/movies"
+    let url = "http://192.168.68.104:8000/api/v1/movies"
     let persistenceController = PersistenceController.shared
     
     AF.request(url, method: .get)
@@ -22,7 +22,6 @@ final class APIFetchHandler {
               group.enter() // Enter the group before downloading artwork
               self.downloadArtwork(from: artworkURLString) { success in
                 if success {
-                  print("Downloaded artwork for movie ID \(movie.id)")
                 } else {
                   print("Failed to download artwork for movie ID \(movie.id)")
                 }
@@ -46,7 +45,7 @@ final class APIFetchHandler {
   }
   
   private func downloadArtwork(from urlString: String, completion: @escaping (Bool) -> Void) {
-    guard let url = URL(string: "http://192.168.68.101:8000/uploads/movies/artworks/\(urlString)") else {
+    guard let url = URL(string: "http://192.168.68.104:8000/uploads/movies/artworks/\(urlString)") else {
       completion(false)
       return
     }
@@ -58,7 +57,6 @@ final class APIFetchHandler {
     
     // Check if the file already exists at the destination path
     if FileManager.default.fileExists(atPath: fileURL.path) {
-      print("Image already exists at \(fileURL)")
       completion(true)
       return
     }

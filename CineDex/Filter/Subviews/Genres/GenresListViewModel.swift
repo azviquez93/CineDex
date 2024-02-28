@@ -3,7 +3,6 @@ import CoreData
 
 @MainActor
 final class GenresListViewModel: ObservableObject {
-  @Published var genresCD: [Genre] = []
   @Published var genres: [GenreData] = []
   
   var selectedGenresNames: [String] {
@@ -23,14 +22,12 @@ final class GenresListViewModel: ObservableObject {
   }
   
   func refreshGenres() {
-    // Fetch data from Core Data
     let persistenceController = PersistenceController.shared
     let fetchRequest: NSFetchRequest<Genre> = Genre.fetchRequest()
-    // Add a sort descriptor to the fetch request
     let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
     fetchRequest.sortDescriptors = [sortDescriptor]
     do {
-      self.genresCD = try persistenceController.container.viewContext.fetch(fetchRequest)
+      let genresCD = try persistenceController.container.viewContext.fetch(fetchRequest)
       genres = genresCD.map { GenreData(name: $0.name ?? "Unknown Genre", selected: false) }
     } catch {
       print("Error fetching movies: \(error)")

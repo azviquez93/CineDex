@@ -10,6 +10,7 @@ import SwiftUI
 struct FilterOptionsView: View {
   
   @ObservedObject var genresListViewModel: GenresListViewModel
+  @ObservedObject var directorsListViewModel: DirectorsListViewModel
   @ObservedObject var moviesViewModel: MoviesViewModel
   @Environment(\.dismiss) private var dismiss
   
@@ -20,8 +21,8 @@ struct FilterOptionsView: View {
           NavigationLink(destination: GenresListView(genresListViewModel: genresListViewModel, moviesViewModel: moviesViewModel)) {
             FilterOptionView(label: "Género", selectedOption: genresListViewModel.selectedLabel)
           }
-          NavigationLink(destination: DirectorsListView()) {
-            FilterOptionView(label: "Director", selectedOption: "Ninguno")
+          NavigationLink(destination: DirectorsListView(directorsListViewModel: directorsListViewModel, moviesViewModel: moviesViewModel)) {
+            FilterOptionView(label: "Director", selectedOption: directorsListViewModel.selectedLabel)
           }
         }
         .listStyle(.plain)
@@ -31,7 +32,9 @@ struct FilterOptionsView: View {
         HStack {
             Button {
               genresListViewModel.refreshGenres()
+              directorsListViewModel.refreshDirectors()
               moviesViewModel.selectedGenres = genresListViewModel.selectedGenresNames
+              moviesViewModel.selectedDirectors = directorsListViewModel.selectedDirectorsNames
               moviesViewModel.refreshMovies()
             } label: {
                 Text("Restablecer todos")
