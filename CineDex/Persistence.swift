@@ -55,21 +55,34 @@ struct PersistenceController {
         // Set up relationships for Metadata and Specification
         movie.metadata = createMetadata(from: movieInfo.metadata, in: viewContext)
         movie.specification = createSpecification(from: movieInfo.specification, in: viewContext)
-        let directorsInfo = movieInfo.directors
-        for directorInfo in directorsInfo {
-          let director = createOrFindDirector(from: directorInfo, in: viewContext)
-          let movieDirector = MovieDirector(context: viewContext)
-          movieDirector.director = director
-          movieDirector.movie = movie
-          director.addToMovies(movieDirector)
+        if let directorsInfo = movieInfo.directors {
+          for directorInfo in directorsInfo {
+            let director = createOrFindDirector(from: directorInfo, in: viewContext)
+            let movieDirector = MovieDirector(context: viewContext)
+            movieDirector.director = director
+            movieDirector.movie = movie
+            director.addToMovies(movieDirector)
+          }
         }
-        let genresInfo = movieInfo.genres
-        for genreInfo in genresInfo {
-          let genre = createOrFindGenre(from: genreInfo, in: viewContext)
-          let movieDirector = MovieGenre(context: viewContext)
-          movieDirector.genre = genre
-          movieDirector.movie = movie
-          genre.addToMovies(movieDirector)
+        if let starsInfo = movieInfo.stars {
+          for starInfo in starsInfo {
+            let star = createOrFindStar(from: starInfo, in: viewContext)
+            let movieStar = MovieStar(context: viewContext)
+            movieStar.star = star
+            movieStar.movie = movie
+            star.addToMovies(movieStar)
+            print(star.person?.name ?? "")
+          }
+        }
+        
+        if let genresInfo = movieInfo.genres {
+          for genreInfo in genresInfo {
+            let genre = createOrFindGenre(from: genreInfo, in: viewContext)
+            let movieDirector = MovieGenre(context: viewContext)
+            movieDirector.genre = genre
+            movieDirector.movie = movie
+            genre.addToMovies(movieDirector)
+          }
         }
       }
       
@@ -84,7 +97,7 @@ struct PersistenceController {
   }
   
   private func createOrFindDirector(from directorInfo: DirectorInfo, in context: NSManagedObjectContext) -> Director {
-    let personName = directorInfo.person.name
+    let personName = directorInfo.name
     
     // Check if the director already exists
     let existingDirectorFetchRequest: NSFetchRequest<Director> = Director.fetchRequest()
@@ -102,13 +115,34 @@ struct PersistenceController {
     
     // If the director does not exist, create a new one
     let newDirector = Director(context: context)
-    
-    newDirector.id = directorInfo.id
-    newDirector.createdAt = directorInfo.createdAt
-    newDirector.updatedAt = directorInfo.updatedAt
-    newDirector.person = createOrFindPerson(from: directorInfo.person, in: context)
+    newDirector.person = createOrFindPerson(from: directorInfo.name, in: context)
     
     return newDirector
+  }
+  
+  private func createOrFindStar(from starInfo: StarInfo, in context: NSManagedObjectContext) -> Star {
+    let personName = starInfo.name
+    
+    // Check if the star already exists
+    let existingStarFetchRequest: NSFetchRequest<Star> = Star.fetchRequest()
+    existingStarFetchRequest.predicate = NSPredicate(format: "person.name == %@", personName)
+    
+    do {
+      let existingStars = try context.fetch(existingStarFetchRequest)
+      
+      if let existingStar = existingStars.first {
+        return existingStar // Star already exists, return it
+      }
+    } catch {
+      print("Error fetching existing stars: \(error)")
+    }
+    
+    // If the star does not exist, create a new one
+    let newStar = Star(context: context)
+    
+    newStar.person = createOrFindPerson(from: starInfo.name, in: context)
+    
+    return newStar
   }
   
   private func createOrFindGenre(from genreInfo: GenreInfo, in context: NSManagedObjectContext) -> Genre {
@@ -127,17 +161,14 @@ struct PersistenceController {
     
     let newGenre = Genre(context: context)
     
-    newGenre.id = genreInfo.id
-    newGenre.createdAt = genreInfo.createdAt
-    newGenre.updatedAt = genreInfo.updatedAt
     newGenre.name = genreInfo.name
     
     return newGenre
   }
   
-  private func createOrFindPerson(from personInfo: PersonInfo, in context: NSManagedObjectContext) -> Person {
+  private func createOrFindPerson(from name: String, in context: NSManagedObjectContext) -> Person {
     let existingPersonFetchRequest: NSFetchRequest<Person> = Person.fetchRequest()
-    existingPersonFetchRequest.predicate = NSPredicate(format: "name == %@", personInfo.name)
+    existingPersonFetchRequest.predicate = NSPredicate(format: "name == %@", name)
     
     do {
       let existingPeople = try context.fetch(existingPersonFetchRequest)
@@ -151,10 +182,7 @@ struct PersistenceController {
     
     let newPerson = Person(context: context)
     
-    newPerson.id = personInfo.id
-    newPerson.createdAt = personInfo.createdAt
-    newPerson.updatedAt = personInfo.updatedAt
-    newPerson.name = personInfo.name
+    newPerson.name = name
     
     return newPerson
   }
@@ -163,8 +191,6 @@ struct PersistenceController {
   private func createMetadata(from metadataInfo: MetadataInfo, in context: NSManagedObjectContext) -> Metadata {
     let metadata = Metadata(context: context)
     metadata.id = metadataInfo.id
-    metadata.createdAt = metadataInfo.createdAt
-    metadata.updatedAt = metadataInfo.updatedAt
     metadata.alternativeTitle = metadataInfo.alternativeTitle
     metadata.originalTitle = metadataInfo.originalTitle
     metadata.artwork = metadataInfo.artwork
@@ -179,8 +205,6 @@ struct PersistenceController {
   private func createSpecification(from specificationInfo: SpecificationInfo, in context: NSManagedObjectContext) -> Specification {
     let specification = Specification(context: context)
     specification.id = specificationInfo.id
-    specification.createdAt = specificationInfo.createdAt
-    specification.updatedAt = specificationInfo.updatedAt
     specification.file = specificationInfo.file
     specification.width = Int16(specificationInfo.width ?? 0)
     specification.height = Int16(specificationInfo.height ?? 0)
@@ -190,7 +214,7 @@ struct PersistenceController {
     specification.container = specificationInfo.container
     specification.videoCodec = specificationInfo.videoCodec
     specification.audioCodec = specificationInfo.audioCodec
-    specification.framesPerSecond = specificationInfo.framesPerSecond
+    specification.framesPerSecond = specificationInfo.framesPerSecond ?? 0.0
     specification.audioChannels = Int16(specificationInfo.audioChannels ?? 0)
     
     return specification

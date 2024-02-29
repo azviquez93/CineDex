@@ -32,7 +32,6 @@ final class GenresListViewModel: ObservableObject {
       // If no directors are selected, do not apply a genre filter
       fetchRequest.predicate = nil
     }
-    
     do {
       let moviesWithDirector = try persistenceController.container.viewContext.fetch(fetchRequest)
       let genresFetchRequest: NSFetchRequest<Genre> = Genre.fetchRequest()
@@ -44,11 +43,9 @@ final class GenresListViewModel: ObservableObject {
         // If no genres are selected, do not apply a movie filter
         genresFetchRequest.predicate = nil
       }
-      
       let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
       genresFetchRequest.sortDescriptors = [sortDescriptor]
       let genresCD = try persistenceController.container.viewContext.fetch(genresFetchRequest)
-      
       if keepSelection {
         let selectedGenres = selectedGenresNames
         genres = genresCD.map { genre in

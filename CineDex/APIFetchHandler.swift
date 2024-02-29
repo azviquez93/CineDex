@@ -7,7 +7,7 @@ final class APIFetchHandler {
   
   func fetchAPIData(completion: @escaping () -> Void) {
     
-    let url = "http://192.168.68.104:8000/api/v1/movies"
+    let url = "http://192.168.68.100:8000/api/v1/movies"
     let persistenceController = PersistenceController.shared
     
     AF.request(url, method: .get)
@@ -45,7 +45,7 @@ final class APIFetchHandler {
   }
   
   private func downloadArtwork(from urlString: String, completion: @escaping (Bool) -> Void) {
-    guard let url = URL(string: "http://192.168.68.104:8000/uploads/movies/artworks/\(urlString)") else {
+    guard let url = URL(string: "http://192.168.68.100:8000/uploads/movies/artworks/\(urlString)") else {
       completion(false)
       return
     }
@@ -95,8 +95,9 @@ struct MovieInfo: Codable {
   let studioId: Int?
   let metadata: MetadataInfo
   let specification: SpecificationInfo
-  let directors: [DirectorInfo]
-  let genres: [GenreInfo]
+  let directors: [DirectorInfo]?
+  let genres: [GenreInfo]?
+  let stars: [StarInfo]?
   
   enum CodingKeys: String, CodingKey {
     case id
@@ -113,55 +114,36 @@ struct MovieInfo: Codable {
     case specification
     case directors
     case genres
+    case stars
   }
 }
 
-struct DirectorInfo: Codable {
-  let id: Int64
-  let createdAt: String
-  let updatedAt: String
-  let person: PersonInfo
-  
-  enum CodingKeys: String, CodingKey {
-    case id
-    case createdAt = "created_at"
-    case updatedAt = "updated_at"
-    case person
-  }
-}
-
-struct GenreInfo: Codable {
-  let id: Int64
-  let createdAt: String
-  let updatedAt: String
+struct StarInfo: Codable {
   let name: String
   
   enum CodingKeys: String, CodingKey {
-    case id
-    case createdAt = "created_at"
-    case updatedAt = "updated_at"
     case name
   }
 }
 
-struct PersonInfo: Codable {
-  let id: Int64
-  let createdAt: String
-  let updatedAt: String
+struct DirectorInfo: Codable {
   let name: String
   
   enum CodingKeys: String, CodingKey {
-    case id
-    case createdAt = "created_at"
-    case updatedAt = "updated_at"
+    case name
+  }
+}
+
+struct GenreInfo: Codable {
+  let name: String
+  
+  enum CodingKeys: String, CodingKey {
     case name
   }
 }
 
 struct MetadataInfo: Codable {
   let id: Int64
-  let createdAt: String
-  let updatedAt: String
   let alternativeTitle: String?
   let originalTitle: String
   let artwork: String?
@@ -172,8 +154,6 @@ struct MetadataInfo: Codable {
   
   enum CodingKeys: String, CodingKey {
     case id
-    case createdAt = "created_at"
-    case updatedAt = "updated_at"
     case alternativeTitle = "alternative_title"
     case originalTitle = "original_title"
     case artwork
@@ -186,8 +166,6 @@ struct MetadataInfo: Codable {
 
 struct SpecificationInfo: Codable {
   let id: Int64
-  let createdAt: String
-  let updatedAt: String
   let file: String
   let width: Int?
   let height: Int?
@@ -197,13 +175,11 @@ struct SpecificationInfo: Codable {
   let container: String?
   let videoCodec: String?
   let audioCodec: String?
-  let framesPerSecond: String?
+  let framesPerSecond: Double?
   let audioChannels: Int?
   
   enum CodingKeys: String, CodingKey {
     case id
-    case createdAt = "created_at"
-    case updatedAt = "updated_at"
     case file
     case width
     case height

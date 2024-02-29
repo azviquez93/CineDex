@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Director" representedClassName="Director" syncable="YES" codeGenerationType="class">
-        <attribute name="createdAt" optional="YES" attributeType="String"/>
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="updatedAt" optional="YES" attributeType="String"/>
         <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieDirector" inverseName="director" inverseEntity="MovieDirector"/>
         <relationship name="person" maxCount="1" deletionRule="Nullify" destinationEntity="Person"/>
     </entity>
     <entity name="Genre" representedClassName="Genre" syncable="YES" codeGenerationType="class">
-        <attribute name="createdAt" optional="YES" attributeType="String"/>
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="updatedAt" optional="YES" attributeType="String"/>
         <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieGenre" inverseName="genre" inverseEntity="MovieGenre"/>
     </entity>
     <entity name="Metadata" representedClassName="Metadata" syncable="YES" codeGenerationType="class">
         <attribute name="addedAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="alternativeTitle" optional="YES" attributeType="String"/>
         <attribute name="artwork" optional="YES" attributeType="String"/>
-        <attribute name="createdAt" optional="YES" attributeType="String"/>
         <attribute name="duration" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="originalTitle" attributeType="String"/>
         <attribute name="summary" optional="YES" attributeType="String"/>
-        <attribute name="updatedAt" optional="YES" attributeType="String"/>
         <attribute name="year" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="movie" maxCount="1" deletionRule="Cascade" destinationEntity="Movie" inverseName="metadata" inverseEntity="Movie"/>
     </entity>
@@ -35,6 +27,7 @@
         <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieGenre" inverseName="movie" inverseEntity="MovieGenre"/>
         <relationship name="metadata" maxCount="1" deletionRule="Cascade" destinationEntity="Metadata" inverseName="movie" inverseEntity="Metadata"/>
         <relationship name="specification" maxCount="1" deletionRule="Cascade" destinationEntity="Specification" inverseName="movie" inverseEntity="Specification"/>
+        <relationship name="stars" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieStar" inverseName="movie" inverseEntity="MovieStar"/>
     </entity>
     <entity name="MovieDirector" representedClassName="MovieDirector" syncable="YES" codeGenerationType="class">
         <relationship name="director" maxCount="1" deletionRule="Nullify" destinationEntity="Director" inverseName="movies" inverseEntity="Director"/>
@@ -44,27 +37,30 @@
         <relationship name="genre" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Genre" inverseName="movies" inverseEntity="Genre"/>
         <relationship name="movie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="genres" inverseEntity="Movie"/>
     </entity>
+    <entity name="MovieStar" representedClassName="MovieStar" syncable="YES" codeGenerationType="class">
+        <relationship name="movie" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="stars" inverseEntity="Movie"/>
+        <relationship name="star" maxCount="1" deletionRule="Nullify" destinationEntity="Star" inverseName="movies" inverseEntity="Star"/>
+    </entity>
     <entity name="Person" representedClassName="Person" syncable="YES" codeGenerationType="class">
-        <attribute name="createdAt" optional="YES" attributeType="String"/>
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="updatedAt" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Specification" representedClassName="Specification" syncable="YES" codeGenerationType="class">
         <attribute name="audioChannels" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="audioCodec" optional="YES" attributeType="String"/>
         <attribute name="bitrate" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="container" optional="YES" attributeType="String"/>
-        <attribute name="createdAt" optional="YES" attributeType="String"/>
         <attribute name="duration" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="file" attributeType="String"/>
-        <attribute name="framesPerSecond" optional="YES" attributeType="String"/>
+        <attribute name="framesPerSecond" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="height" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="size" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="updatedAt" optional="YES" attributeType="String"/>
         <attribute name="videoCodec" optional="YES" attributeType="String"/>
         <attribute name="width" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="movie" maxCount="1" deletionRule="Cascade" destinationEntity="Movie" inverseName="specification" inverseEntity="Movie"/>
+    </entity>
+    <entity name="Star" representedClassName="Star" syncable="YES" codeGenerationType="class">
+        <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieStar" inverseName="star" inverseEntity="MovieStar"/>
+        <relationship name="person" maxCount="1" deletionRule="Nullify" destinationEntity="Person"/>
     </entity>
 </model>

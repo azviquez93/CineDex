@@ -11,6 +11,7 @@ struct FilterOptionsView: View {
   
   @ObservedObject var genresListViewModel = FilterOptionsHandler.shared.genresListViewModel
   @ObservedObject var directorsListViewModel = FilterOptionsHandler.shared.directorsListViewModel
+  @ObservedObject var starsListViewModel = FilterOptionsHandler.shared.starsListViewModel
   @ObservedObject var moviesViewModel: MoviesViewModel
   @Environment(\.dismiss) private var dismiss
   
@@ -23,6 +24,9 @@ struct FilterOptionsView: View {
           }
           NavigationLink(destination: DirectorsListView(directorsListViewModel: directorsListViewModel, moviesViewModel: moviesViewModel)) {
             FilterOptionView(label: "Director", selectedOption: directorsListViewModel.selectedLabel)
+          }
+          NavigationLink(destination: StarsListView(starsListViewModel: starsListViewModel, moviesViewModel: moviesViewModel)) {
+            FilterOptionView(label: "Reparto", selectedOption: directorsListViewModel.selectedLabel)
           }
         }
         .listStyle(.plain)
