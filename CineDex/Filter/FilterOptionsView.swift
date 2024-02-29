@@ -31,8 +31,7 @@ struct FilterOptionsView: View {
         
         HStack {
             Button {
-              genresListViewModel.refreshGenres()
-              directorsListViewModel.refreshDirectors()
+              FilterOptionsHandler.shared.refreshFilters()
               moviesViewModel.refreshMovies()
             } label: {
                 Text("Restablecer todos")

@@ -14,8 +14,8 @@ final class FilterOptionsHandler: ObservableObject {
   }
   
   func refreshFilters() {
-    genresListViewModel.refreshGenres()
-    directorsListViewModel.refreshDirectors()
+    genresListViewModel.refreshGenres(keepSelection: false, reset: true)
+    directorsListViewModel.refreshDirectors(keepSelection: false, reset: true)
   }
   
 }

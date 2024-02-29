@@ -21,7 +21,8 @@ struct DirectorsListView: View {
       Spacer()
       HStack {
           Button {
-            directorsListViewModel.refreshDirectors()
+            directorsListViewModel.refreshDirectors(keepSelection: false, reset: false)
+            FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
             moviesViewModel.refreshMovies()
           } label: {
               Text("Restablecer")
@@ -54,6 +55,7 @@ struct DirectorsRow: View {
     .contentShape(Rectangle())
     .onTapGesture {
       director.selected.toggle()
+      FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
       moviesViewModel.refreshMovies()
     }
   }
