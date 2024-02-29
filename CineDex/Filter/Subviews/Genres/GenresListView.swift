@@ -11,8 +11,6 @@ struct GenresListView: View {
         ForEach($genresListViewModel.genres) { $genre in
           if searchText.isEmpty || (genre.name.localizedCaseInsensitiveContains(searchText)) {
             GenresRow(genre: $genre, genresListViewModel: genresListViewModel, moviesViewModel: moviesViewModel)
-            //.disabled(true)
-            //.foregroundColor(.gray)
           }
         }
       }
@@ -23,6 +21,7 @@ struct GenresListView: View {
           Button {
             genresListViewModel.refreshGenres(keepSelection: false, reset: false)
             FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors(keepSelection: true, reset: false)
+            FilterOptionsHandler.shared.starsListViewModel.refreshStars(keepSelection: true, reset: false)
             moviesViewModel.refreshMovies()
           } label: {
               Text("Restablecer")
@@ -56,6 +55,7 @@ struct GenresRow: View {
     .onTapGesture {
       genre.selected.toggle()
       FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors(keepSelection: true, reset: false)
+      FilterOptionsHandler.shared.starsListViewModel.refreshStars(keepSelection: true, reset: false)
       moviesViewModel.refreshMovies()
     }
   }

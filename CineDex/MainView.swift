@@ -23,8 +23,8 @@ struct MainView: View {
           Label("Ajustes", systemImage: "gear")
         }
     }.onAppear {
-      moviesViewModel.refreshMovies()
       FilterOptionsHandler.shared.refreshFilters()
+      moviesViewModel.refreshMovies()
     }
   }
 }

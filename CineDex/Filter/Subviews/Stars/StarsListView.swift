@@ -11,8 +11,6 @@ struct StarsListView: View {
         ForEach($starsListViewModel.stars) { $star in
           if searchText.isEmpty || (star.name.localizedCaseInsensitiveContains(searchText)) {
             StarsRow(star: $star, starsListViewModel: starsListViewModel, moviesViewModel: moviesViewModel)
-            //.disabled(true)
-            //.foregroundColor(.gray)
           }
         }
       }

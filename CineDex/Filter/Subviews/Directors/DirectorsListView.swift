@@ -11,8 +11,6 @@ struct DirectorsListView: View {
         ForEach($directorsListViewModel.directors) { $director in
           if searchText.isEmpty || (director.name.localizedCaseInsensitiveContains(searchText)) {
             DirectorsRow(director: $director, directorsListViewModel: directorsListViewModel, moviesViewModel: moviesViewModel)
-            //.disabled(true)
-            //.foregroundColor(.gray)
           }
         }
       }

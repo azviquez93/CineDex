@@ -26,7 +26,7 @@ struct FilterOptionsView: View {
             FilterOptionView(label: "Director", selectedOption: directorsListViewModel.selectedLabel)
           }
           NavigationLink(destination: StarsListView(starsListViewModel: starsListViewModel, moviesViewModel: moviesViewModel)) {
-            FilterOptionView(label: "Reparto", selectedOption: directorsListViewModel.selectedLabel)
+            FilterOptionView(label: "Reparto", selectedOption: starsListViewModel.selectedLabel)
           }
         }
         .listStyle(.plain)
