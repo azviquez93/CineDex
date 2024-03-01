@@ -21,6 +21,7 @@ struct StarsListView: View {
           Button {
             starsListViewModel.refreshStars(keepSelection: false, reset: false)
             FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
+            FilterOptionsHandler.shared.starsListViewModel.refreshStars(keepSelection: true, reset: false)
             moviesViewModel.refreshMovies()
           } label: {
               Text("Restablecer")
@@ -29,7 +30,7 @@ struct StarsListView: View {
           .padding()
       }
     }
-    .navigationTitle("Reparto")
+    .navigationTitle("Star")
     .navigationBarTitleDisplayMode(.inline)
   }
 }
@@ -54,6 +55,7 @@ struct StarsRow: View {
     .onTapGesture {
       star.selected.toggle()
       FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
+      FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors(keepSelection: true, reset: false)
       moviesViewModel.refreshMovies()
     }
   }

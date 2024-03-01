@@ -24,30 +24,34 @@ final class DirectorsListViewModel: ObservableObject {
   func refreshDirectors(keepSelection: Bool, reset: Bool) {
     let persistenceController = PersistenceController.shared
     let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
+    
     let genres = FilterOptionsHandler.shared.genresListViewModel.selectedGenresNames
+    let stars = FilterOptionsHandler.shared.starsListViewModel.selectedStarsNames
+    
+    var predicates = [NSPredicate]()
     if genres.count > 0 && !reset {
-      // If genres are selected, filter movies by these genres
-      fetchRequest.predicate = NSPredicate(format: "ANY genres.genre.name IN %@", genres)
-    } else {
-      // If no genres are selected, do not apply a genre filter
-      fetchRequest.predicate = nil
+        let genresPredicate = NSPredicate(format: "ANY genres.genre.name IN %@", genres)
+        predicates.append(genresPredicate)
+    }
+    if stars.count > 0 && !reset {
+        let starsPredicate = NSPredicate(format: "ANY stars.star.person.name IN %@", stars)
+        predicates.append(starsPredicate)
+    }
+    
+    if !predicates.isEmpty {
+        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        fetchRequest.predicate = compoundPredicate
     }
     
     do {
-      let moviesWithGenre = try persistenceController.container.viewContext.fetch(fetchRequest)
+      let moviesWithFilters = try persistenceController.container.viewContext.fetch(fetchRequest)
       let directorsFetchRequest: NSFetchRequest<Director> = Director.fetchRequest()
-      if genres.count > 0 && !reset {
-        let directorsPredicate = NSPredicate(format: "ANY movies.movie IN %@", moviesWithGenre)
-        directorsFetchRequest.predicate = directorsPredicate
-      } else {
-        // If no genres are selected, do not apply a movie filter
-        directorsFetchRequest.predicate = nil
+      if (stars.count > 0  || genres.count > 0) && !reset {
+        directorsFetchRequest.predicate = NSPredicate(format: "ANY movies.movie IN %@", moviesWithFilters)
       }
-      
       let sortDescriptor = NSSortDescriptor(key: "person.name", ascending: true)
       directorsFetchRequest.sortDescriptors = [sortDescriptor]
       let directorsCD = try persistenceController.container.viewContext.fetch(directorsFetchRequest)
-      
       if keepSelection {
         let selectedDirectors = selectedDirectorsNames
         directors = directorsCD.map { director in

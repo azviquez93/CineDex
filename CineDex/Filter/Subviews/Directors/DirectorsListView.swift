@@ -21,6 +21,7 @@ struct DirectorsListView: View {
           Button {
             directorsListViewModel.refreshDirectors(keepSelection: false, reset: false)
             FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
+            FilterOptionsHandler.shared.starsListViewModel.refreshStars(keepSelection: true, reset: false)
             moviesViewModel.refreshMovies()
           } label: {
               Text("Restablecer")
@@ -54,6 +55,7 @@ struct DirectorsRow: View {
     .onTapGesture {
       director.selected.toggle()
       FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
+      FilterOptionsHandler.shared.starsListViewModel.refreshStars(keepSelection: true, reset: false)
       moviesViewModel.refreshMovies()
     }
   }
