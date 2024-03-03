@@ -1,16 +1,16 @@
 import SwiftUI
 
-struct StarsListView: View {
+struct WritersListView: View {
   @State private var searchText: String = ""
-  @ObservedObject var starsListViewModel: StarsListViewModel
+  @ObservedObject var writersListViewModel: WritersListViewModel
   @ObservedObject var moviesViewModel: MoviesViewModel
   
   var body: some View {
     VStack {
       List {
-        ForEach($starsListViewModel.stars) { $star in
-          if searchText.isEmpty || (star.name.localizedCaseInsensitiveContains(searchText)) {
-            StarsRow(star: $star, starsListViewModel: starsListViewModel, moviesViewModel: moviesViewModel)
+        ForEach($writersListViewModel.writers) { $writer in
+          if searchText.isEmpty || (writer.name.localizedCaseInsensitiveContains(searchText)) {
+            WritersRow(writer: $writer, writersListViewModel: writersListViewModel, moviesViewModel: moviesViewModel)
           }
         }
       }
@@ -19,10 +19,10 @@ struct StarsListView: View {
       Spacer()
       HStack {
           Button {
-            starsListViewModel.refreshStars(keepSelection: false, reset: false)
+            writersListViewModel.refreshWriters(keepSelection: false, reset: false)
             FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
             FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors(keepSelection: true, reset: false)
-            FilterOptionsHandler.shared.writersListViewModel.refreshWriters(keepSelection: true, reset: false)
+            FilterOptionsHandler.shared.starsListViewModel.refreshStars(keepSelection: true, reset: false)
             moviesViewModel.refreshMovies()
           } label: {
               Text("Restablecer")
@@ -31,21 +31,21 @@ struct StarsListView: View {
           .padding()
       }
     }
-    .navigationTitle("Reparto")
+    .navigationTitle("Escritores")
     .navigationBarTitleDisplayMode(.inline)
   }
 }
 
-struct StarsRow: View {
-  @Binding var star: StarData
-  @ObservedObject var starsListViewModel: StarsListViewModel
+struct WritersRow: View {
+  @Binding var writer: WriterData
+  @ObservedObject var writersListViewModel: WritersListViewModel
   @ObservedObject var moviesViewModel: MoviesViewModel
   
   var body: some View {
     HStack {
-      Text(star.name)
+      Text(writer.name)
       Spacer()
-      if star.selected {
+      if writer.selected {
         Image(systemName: "checkmark")
           .foregroundColor(.blue)
         
@@ -54,10 +54,10 @@ struct StarsRow: View {
     }
     .contentShape(Rectangle())
     .onTapGesture {
-      star.selected.toggle()
+      writer.selected.toggle()
       FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
       FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors(keepSelection: true, reset: false)
-      FilterOptionsHandler.shared.writersListViewModel.refreshWriters(keepSelection: true, reset: false)
+      FilterOptionsHandler.shared.starsListViewModel.refreshStars(keepSelection: true, reset: false)
       moviesViewModel.refreshMovies()
     }
   }

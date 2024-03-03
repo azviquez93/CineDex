@@ -22,6 +22,7 @@ struct DirectorsListView: View {
             directorsListViewModel.refreshDirectors(keepSelection: false, reset: false)
             FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
             FilterOptionsHandler.shared.starsListViewModel.refreshStars(keepSelection: true, reset: false)
+            FilterOptionsHandler.shared.writersListViewModel.refreshWriters(keepSelection: true, reset: false)
             moviesViewModel.refreshMovies()
           } label: {
               Text("Restablecer")
@@ -56,6 +57,7 @@ struct DirectorsRow: View {
       director.selected.toggle()
       FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
       FilterOptionsHandler.shared.starsListViewModel.refreshStars(keepSelection: true, reset: false)
+      FilterOptionsHandler.shared.writersListViewModel.refreshWriters(keepSelection: true, reset: false)
       moviesViewModel.refreshMovies()
     }
   }

@@ -2,32 +2,32 @@ import SwiftUI
 import CoreData
 
 @MainActor
-final class StarsListViewModel: ObservableObject {
-  @Published var stars: [StarData] = []
+final class WritersListViewModel: ObservableObject {
+  @Published var writers: [WriterData] = []
   
-  var selectedStarsNames: [String] {
-    return stars.filter { $0.selected }.map { $0.name }
+  var selectedWritersNames: [String] {
+    return writers.filter { $0.selected }.map { $0.name }
   }
   
   var selectedLabel: String {
     get {
-      let selectedStars = stars.filter { $0.selected }
-      if selectedStars.isEmpty {
+      let selectedWriters = writers.filter { $0.selected }
+      if selectedWriters.isEmpty {
         return "Ninguno"
       } else {
-        let selectedStarNames = selectedStars.map { $0.name }
-        return selectedStarNames.joined(separator: ", ")
+        let selectedWriterNames = selectedWriters.map { $0.name }
+        return selectedWriterNames.joined(separator: ", ")
       }
     }
   }
   
-  func refreshStars(keepSelection: Bool, reset: Bool) {
+  func refreshWriters(keepSelection: Bool, reset: Bool) {
     let persistenceController = PersistenceController.shared
     let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
     
     let genres = FilterOptionsHandler.shared.genresListViewModel.selectedGenresNames
     let directors = FilterOptionsHandler.shared.directorsListViewModel.selectedDirectorsNames
-    let writers = FilterOptionsHandler.shared.writersListViewModel.selectedWritersNames
+    let stars = FilterOptionsHandler.shared.starsListViewModel.selectedStarsNames
     var predicates = [NSPredicate]()
     
     if genres.count > 0 && !reset {
@@ -40,9 +40,9 @@ final class StarsListViewModel: ObservableObject {
         predicates.append(directorsPredicate)
     }
     
-    if writers.count > 0 && !reset {
-        let writersPredicate = NSPredicate(format: "ANY writers.writer.person.name IN %@", writers)
-        predicates.append(writersPredicate)
+    if stars.count > 0 && !reset {
+        let starsPredicate = NSPredicate(format: "ANY stars.star.person.name IN %@", stars)
+        predicates.append(starsPredicate)
     }
 
     if !predicates.isEmpty {
@@ -52,32 +52,32 @@ final class StarsListViewModel: ObservableObject {
 
     do {
       let moviesWithFilters = try persistenceController.container.viewContext.fetch(fetchRequest)
-      let starsFetchRequest: NSFetchRequest<Star> = Star.fetchRequest()
+      let writersFetchRequest: NSFetchRequest<Writer> = Writer.fetchRequest()
       if !reset {
-        starsFetchRequest.predicate = NSPredicate(format: "ANY movies.movie IN %@", moviesWithFilters)
+        writersFetchRequest.predicate = NSPredicate(format: "ANY movies.movie IN %@", moviesWithFilters)
       }
       let sortDescriptor = NSSortDescriptor(key: "person.name", ascending: true)
-      starsFetchRequest.sortDescriptors = [sortDescriptor]
-      let starsCD = try persistenceController.container.viewContext.fetch(starsFetchRequest)
+      writersFetchRequest.sortDescriptors = [sortDescriptor]
+      let writersCD = try persistenceController.container.viewContext.fetch(writersFetchRequest)
       if keepSelection {
-        let selectedStars = selectedStarsNames
-        stars = starsCD.map { star in
-          let isSelected = selectedStars.contains(star.person?.name ?? "")
-          return StarData(name: star.person?.name ?? "Unknown Star", selected: isSelected)
+        let selectedWriters = selectedWritersNames
+        writers = writersCD.map { writer in
+          let isSelected = selectedWriters.contains(writer.person?.name ?? "")
+          return WriterData(name: writer.person?.name ?? "Unknown Writer", selected: isSelected)
         }
       }
       else {
-        stars = starsCD.map { StarData(name: $0.person?.name ?? "Unknown Star", selected: false) }
+        writers = writersCD.map { WriterData(name: $0.person?.name ?? "Unknown Writer", selected: false) }
       }
     } catch {
-      print("Error fetching stars: \(error)")
+      print("Error fetching writers: \(error)")
     }
   }
   
   
 }
 
-struct StarData: Hashable, Identifiable {
+struct WriterData: Hashable, Identifiable {
   let id = UUID()
   var name: String
   var selected: Bool

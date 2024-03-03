@@ -27,6 +27,7 @@ final class GenresListViewModel: ObservableObject {
     
     let directors = FilterOptionsHandler.shared.directorsListViewModel.selectedDirectorsNames
     let stars = FilterOptionsHandler.shared.starsListViewModel.selectedStarsNames
+    let writers = FilterOptionsHandler.shared.writersListViewModel.selectedWritersNames
     var predicates = [NSPredicate]()
     
     if directors.count > 0 && !reset {
@@ -38,6 +39,11 @@ final class GenresListViewModel: ObservableObject {
         let starsPredicate = NSPredicate(format: "ANY stars.star.person.name IN %@", stars)
         predicates.append(starsPredicate)
     }
+    
+    if writers.count > 0 && !reset {
+        let writersPredicate = NSPredicate(format: "ANY writers.writer.person.name IN %@", writers)
+        predicates.append(writersPredicate)
+    }
 
     if !predicates.isEmpty {
         let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
@@ -47,7 +53,7 @@ final class GenresListViewModel: ObservableObject {
     do {
       let moviesWithFilters = try persistenceController.container.viewContext.fetch(fetchRequest)
       let genresFetchRequest: NSFetchRequest<Genre> = Genre.fetchRequest()
-      if (stars.count > 0  || directors.count > 0) && !reset {
+      if !reset {
         genresFetchRequest.predicate = NSPredicate(format: "ANY movies.movie IN %@", moviesWithFilters)
       }
       let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)

@@ -28,6 +28,7 @@
         <relationship name="metadata" maxCount="1" deletionRule="Cascade" destinationEntity="Metadata" inverseName="movie" inverseEntity="Metadata"/>
         <relationship name="specification" maxCount="1" deletionRule="Cascade" destinationEntity="Specification" inverseName="movie" inverseEntity="Specification"/>
         <relationship name="stars" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieStar" inverseName="movie" inverseEntity="MovieStar"/>
+        <relationship name="writers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieWriter" inverseName="movie" inverseEntity="MovieWriter"/>
     </entity>
     <entity name="MovieDirector" representedClassName="MovieDirector" syncable="YES" codeGenerationType="class">
         <relationship name="director" maxCount="1" deletionRule="Nullify" destinationEntity="Director" inverseName="movies" inverseEntity="Director"/>
@@ -40,6 +41,10 @@
     <entity name="MovieStar" representedClassName="MovieStar" syncable="YES" codeGenerationType="class">
         <relationship name="movie" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="stars" inverseEntity="Movie"/>
         <relationship name="star" maxCount="1" deletionRule="Nullify" destinationEntity="Star" inverseName="movies" inverseEntity="Star"/>
+    </entity>
+    <entity name="MovieWriter" representedClassName="MovieWriter" syncable="YES" codeGenerationType="class">
+        <relationship name="movie" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="writers" inverseEntity="Movie"/>
+        <relationship name="writer" maxCount="1" deletionRule="Nullify" destinationEntity="Writer" inverseName="movies" inverseEntity="Writer"/>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -61,6 +66,10 @@
     </entity>
     <entity name="Star" representedClassName="Star" syncable="YES" codeGenerationType="class">
         <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieStar" inverseName="star" inverseEntity="MovieStar"/>
+        <relationship name="person" maxCount="1" deletionRule="Nullify" destinationEntity="Person"/>
+    </entity>
+    <entity name="Writer" representedClassName="Writer" syncable="YES" codeGenerationType="class">
+        <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieWriter" inverseName="writer" inverseEntity="MovieWriter"/>
         <relationship name="person" maxCount="1" deletionRule="Nullify" destinationEntity="Person"/>
     </entity>
 </model>

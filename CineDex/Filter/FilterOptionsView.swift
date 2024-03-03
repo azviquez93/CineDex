@@ -12,6 +12,7 @@ struct FilterOptionsView: View {
   @ObservedObject var genresListViewModel = FilterOptionsHandler.shared.genresListViewModel
   @ObservedObject var directorsListViewModel = FilterOptionsHandler.shared.directorsListViewModel
   @ObservedObject var starsListViewModel = FilterOptionsHandler.shared.starsListViewModel
+  @ObservedObject var writersListViewModel = FilterOptionsHandler.shared.writersListViewModel
   @ObservedObject var moviesViewModel: MoviesViewModel
   @Environment(\.dismiss) private var dismiss
   
@@ -20,13 +21,16 @@ struct FilterOptionsView: View {
       VStack {
         List {
           NavigationLink(destination: GenresListView(genresListViewModel: genresListViewModel, moviesViewModel: moviesViewModel)) {
-            FilterOptionView(label: "Género", selectedOption: genresListViewModel.selectedLabel)
+            FilterOptionView(label: "Géneros", selectedOption: genresListViewModel.selectedLabel)
           }
           NavigationLink(destination: DirectorsListView(directorsListViewModel: directorsListViewModel, moviesViewModel: moviesViewModel)) {
-            FilterOptionView(label: "Director", selectedOption: directorsListViewModel.selectedLabel)
+            FilterOptionView(label: "Directores", selectedOption: directorsListViewModel.selectedLabel)
           }
           NavigationLink(destination: StarsListView(starsListViewModel: starsListViewModel, moviesViewModel: moviesViewModel)) {
             FilterOptionView(label: "Reparto", selectedOption: starsListViewModel.selectedLabel)
+          }
+          NavigationLink(destination: WritersListView(writersListViewModel: writersListViewModel, moviesViewModel: moviesViewModel)) {
+            FilterOptionView(label: "Escritores", selectedOption: writersListViewModel.selectedLabel)
           }
         }
         .listStyle(.plain)

@@ -58,6 +58,10 @@ final class MoviesViewModel: ObservableObject {
       predicates.append(starsPredicate)
     }
     
+    if let writersPredicate = writersPredicate() {
+      predicates.append(writersPredicate)
+    }
+    
     // Combine all predicates using AND
     let finalPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     fetchRequest.predicate = finalPredicate
@@ -92,6 +96,15 @@ final class MoviesViewModel: ObservableObject {
       return nil
     }
     return NSPredicate(format: "ANY stars.star.person.name IN %@", selectedStars)
+    
+  }
+  
+  private func writersPredicate() -> NSPredicate? {
+    let selectedWriters = FilterOptionsHandler.shared.writersListViewModel.selectedWritersNames
+    guard !selectedWriters.isEmpty else {
+      return nil
+    }
+    return NSPredicate(format: "ANY writers.writer.person.name IN %@", selectedWriters)
     
   }
   

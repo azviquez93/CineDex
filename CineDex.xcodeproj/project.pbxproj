@@ -19,6 +19,8 @@
 		778CE0112B8719C9008DF74C /* FilterOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0102B8719C9008DF74C /* FilterOptionView.swift */; };
 		778CE0142B871C31008DF74C /* DirectorsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0132B871C31008DF74C /* DirectorsListView.swift */; };
 		778CE0162B871CB7008DF74C /* GenresListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0152B871CB7008DF74C /* GenresListView.swift */; };
+		779E31A42B941AB300644A72 /* WritersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779E31A32B941AB300644A72 /* WritersListView.swift */; };
+		779E31A72B941AFD00644A72 /* WritersListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779E31A62B941AFD00644A72 /* WritersListViewModel.swift */; };
 		77AB74852B8F051100FC9A5F /* FilterOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB74842B8F051100FC9A5F /* FilterOptionsHandler.swift */; };
 		77D176172B886678000CC8DB /* GenresListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D176162B886678000CC8DB /* GenresListViewModel.swift */; };
 		77D5C3212B8E97A300A142A4 /* DirectorsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5C3202B8E97A300A142A4 /* DirectorsListViewModel.swift */; };
@@ -68,6 +70,8 @@
 		778CE0102B8719C9008DF74C /* FilterOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionView.swift; sourceTree = "<group>"; };
 		778CE0132B871C31008DF74C /* DirectorsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorsListView.swift; sourceTree = "<group>"; };
 		778CE0152B871CB7008DF74C /* GenresListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresListView.swift; sourceTree = "<group>"; };
+		779E31A32B941AB300644A72 /* WritersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritersListView.swift; sourceTree = "<group>"; };
+		779E31A62B941AFD00644A72 /* WritersListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritersListViewModel.swift; sourceTree = "<group>"; };
 		77AB74842B8F051100FC9A5F /* FilterOptionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionsHandler.swift; sourceTree = "<group>"; };
 		77D176162B886678000CC8DB /* GenresListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresListViewModel.swift; sourceTree = "<group>"; };
 		77D5C3202B8E97A300A142A4 /* DirectorsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorsListViewModel.swift; sourceTree = "<group>"; };
@@ -150,8 +154,18 @@
 				778169662B9017F900AA2B9A /* Stars */,
 				77D5C31F2B8E974300A142A4 /* Directors */,
 				77D5C31E2B8E973600A142A4 /* Genres */,
+				779E31A52B941ABD00644A72 /* Writers */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		779E31A52B941ABD00644A72 /* Writers */ = {
+			isa = PBXGroup;
+			children = (
+				779E31A32B941AB300644A72 /* WritersListView.swift */,
+				779E31A62B941AFD00644A72 /* WritersListViewModel.swift */,
+			);
+			path = Writers;
 			sourceTree = "<group>";
 		};
 		77D5C31E2B8E973600A142A4 /* Genres */ = {
@@ -384,6 +398,8 @@
 				77D176172B886678000CC8DB /* GenresListViewModel.swift in Sources */,
 				77E2D1B42B857F2000E996E4 /* APIFetchHandler.swift in Sources */,
 				77D5C3212B8E97A300A142A4 /* DirectorsListViewModel.swift in Sources */,
+				779E31A72B941AFD00644A72 /* WritersListViewModel.swift in Sources */,
+				779E31A42B941AB300644A72 /* WritersListView.swift in Sources */,
 				778169682B90181100AA2B9A /* StarsListView.swift in Sources */,
 				778CE00A2B86F97A008DF74C /* Appearance.swift in Sources */,
 				77E2D18E2B857ECD00E996E4 /* Persistence.swift in Sources */,

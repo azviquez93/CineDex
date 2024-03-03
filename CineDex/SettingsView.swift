@@ -32,6 +32,12 @@ struct SettingsView: View {
             refreshMovies()
           }
         }
+        
+        Section {
+          Button("Recargar pósters") {
+            refreshArtworks()
+          }
+        }
       }
       .navigationTitle("Ajustes")
     }
@@ -40,6 +46,12 @@ struct SettingsView: View {
   private func refreshMovies() {
     APIFetchHandler.shared.fetchAPIData {
       moviesViewModel.refreshMovies()
+    }
+  }
+  
+  private func refreshArtworks() {
+    APIFetchHandler.shared.refreshArtworks {
+      print("Descarga completa")
     }
   }
   

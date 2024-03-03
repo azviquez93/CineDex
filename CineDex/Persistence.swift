@@ -71,7 +71,6 @@ struct PersistenceController {
             movieStar.star = star
             movieStar.movie = movie
             star.addToMovies(movieStar)
-            print(star.person?.name ?? "")
           }
         }
         
@@ -82,6 +81,16 @@ struct PersistenceController {
             movieDirector.genre = genre
             movieDirector.movie = movie
             genre.addToMovies(movieDirector)
+          }
+        }
+        
+        if let writersInfo = movieInfo.writers {
+          for writerInfo in writersInfo {
+            let writer = createOrFindWriter(from: writerInfo, in: viewContext)
+            let movieWriter = MovieWriter(context: viewContext)
+            movieWriter.writer = writer
+            movieWriter.movie = movie
+            writer.addToMovies(movieWriter)
           }
         }
       }
@@ -118,6 +127,30 @@ struct PersistenceController {
     newDirector.person = createOrFindPerson(from: directorInfo.name, in: context)
     
     return newDirector
+  }
+  
+  private func createOrFindWriter(from writerInfo: WriterInfo, in context: NSManagedObjectContext) -> Writer {
+    let personName = writerInfo.name
+    
+    // Check if the writer already exists
+    let existingWriterFetchRequest: NSFetchRequest<Writer> = Writer.fetchRequest()
+    existingWriterFetchRequest.predicate = NSPredicate(format: "person.name == %@", personName)
+    
+    do {
+      let existingWriters = try context.fetch(existingWriterFetchRequest)
+      
+      if let existingWriter = existingWriters.first {
+        return existingWriter // Writer already exists, return it
+      }
+    } catch {
+      print("Error fetching existing writers: \(error)")
+    }
+    
+    // If the writer does not exist, create a new one
+    let newWriter = Writer(context: context)
+    newWriter.person = createOrFindPerson(from: writerInfo.name, in: context)
+    
+    return newWriter
   }
   
   private func createOrFindStar(from starInfo: StarInfo, in context: NSManagedObjectContext) -> Star {

@@ -1,4 +1,5 @@
 import Alamofire
+import CoreData
 import Foundation
 
 final class APIFetchHandler {
@@ -7,7 +8,7 @@ final class APIFetchHandler {
   
   func fetchAPIData(completion: @escaping () -> Void) {
     
-    let url = "http://192.168.68.100:8000/api/v1/movies"
+    let url = "http://192.168.68.107:8000/api/v1/movies"
     let persistenceController = PersistenceController.shared
     
     AF.request(url, method: .get)
@@ -17,18 +18,18 @@ final class APIFetchHandler {
         case .success(let movieDataArray):
           let group = DispatchGroup() // Create a dispatch group
           persistenceController.resetCoreData()
-          for movie in movieDataArray {
-            if let artworkURLString = movie.metadata.artwork {
-              group.enter() // Enter the group before downloading artwork
-              self.downloadArtwork(from: artworkURLString) { success in
-                if success {
-                } else {
-                  print("Failed to download artwork for movie ID \(movie.id)")
-                }
-                group.leave() // Leave the group after downloading artwork
-              }
-            }
-          }
+          //          for movie in movieDataArray {
+          //            if let artworkURLString = movie.metadata.artwork {
+          //              group.enter() // Enter the group before downloading artwork
+          //              self.downloadArtwork(from: artworkURLString) { success in
+          //                if success {
+          //                } else {
+          //                  print("Failed to download artwork for movie ID \(movie.id)")
+          //                }
+          //                group.leave() // Leave the group after downloading artwork
+          //              }
+          //            }
+          //          }
           group.notify(queue: .main) {
             // This block is called when all tasks in the group have completed
             persistenceController.batchInsertMovies(movieDataArray) {
@@ -44,8 +45,43 @@ final class APIFetchHandler {
       }
   }
   
+  func refreshArtworks(completion: @escaping () -> Void) {
+    let persistenceController = PersistenceController.shared
+    let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
+    
+    // Execute the fetch request
+    do {
+      let movieDataArray = try persistenceController.container.viewContext.fetch(fetchRequest)
+      // Use DispatchGroup to wait for all downloads to complete
+      let group = DispatchGroup()
+      
+      for movie in movieDataArray {
+        if let artworkURLString = movie.metadata?.artwork {
+          group.enter() // Enter the group before downloading artwork
+          self.downloadArtwork(from: artworkURLString) { success in
+            if success {
+              // Handle success, e.g., update UI or save artwork to Core Data
+            } else {
+              print("Failed to download artwork for movie ID \(movie.id)")
+            }
+            group.leave() // Leave the group after downloading artwork
+          }
+        }
+      }
+      
+      // Notify when all downloads are complete
+      group.notify(queue: .main) {
+        completion()
+      }
+    } catch {
+      // Handle fetch request error
+      print("Failed to fetch movies: \(error)")
+      completion()
+    }
+  }
+  
   private func downloadArtwork(from urlString: String, completion: @escaping (Bool) -> Void) {
-    guard let url = URL(string: "http://192.168.68.100:8000/uploads/movies/artworks/\(urlString)") else {
+    guard let url = URL(string: "http://192.168.68.107:8000/uploads/movies/artworks/\(urlString)") else {
       completion(false)
       return
     }
@@ -98,6 +134,7 @@ struct MovieInfo: Codable {
   let directors: [DirectorInfo]?
   let genres: [GenreInfo]?
   let stars: [StarInfo]?
+  let writers: [WriterInfo]?
   
   enum CodingKeys: String, CodingKey {
     case id
@@ -115,6 +152,7 @@ struct MovieInfo: Codable {
     case directors
     case genres
     case stars
+    case writers
   }
 }
 
@@ -127,6 +165,14 @@ struct StarInfo: Codable {
 }
 
 struct DirectorInfo: Codable {
+  let name: String
+  
+  enum CodingKeys: String, CodingKey {
+    case name
+  }
+}
+
+struct WriterInfo: Codable {
   let name: String
   
   enum CodingKeys: String, CodingKey {
