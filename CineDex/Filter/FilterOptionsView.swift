@@ -30,7 +30,7 @@ struct FilterOptionsView: View {
             FilterOptionView(label: "Reparto", selectedOption: starsListViewModel.selectedLabel)
           }
           NavigationLink(destination: WritersListView(writersListViewModel: writersListViewModel, moviesViewModel: moviesViewModel)) {
-            FilterOptionView(label: "Escritores", selectedOption: writersListViewModel.selectedLabel)
+            FilterOptionView(label: "Guionistas", selectedOption: writersListViewModel.selectedLabel)
           }
         }
         .listStyle(.plain)

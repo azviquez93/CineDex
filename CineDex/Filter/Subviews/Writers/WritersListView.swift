@@ -31,7 +31,7 @@ struct WritersListView: View {
           .padding()
       }
     }
-    .navigationTitle("Escritores")
+    .navigationTitle("Guionistas")
     .navigationBarTitleDisplayMode(.inline)
   }
 }
