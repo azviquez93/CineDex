@@ -18,13 +18,12 @@ struct SettingsView: View {
       List {
         
         Section(header: Text("Aspecto")) {
-          VStack(alignment: .leading) {
-            Picker("", selection: $appearance) {
+            Picker("Aspecto", selection: $appearance) {
               ForEach(Appearance.allCases) { appearance in
                 Text(appearance.name).tag(appearance)
-              }          }
-            .pickerStyle(SegmentedPickerStyle())
-          }
+              }
+            }
+            .pickerStyle(.segmented)
         }
         
         Section {
@@ -40,11 +39,13 @@ struct SettingsView: View {
         }
       }
       .navigationTitle("Ajustes")
+      .listStyle(.grouped)
     }
   }
   
   private func refreshMovies() {
     APIFetchHandler.shared.fetchAPIData {
+      FilterOptionsHandler.shared.refreshFilters()
       moviesViewModel.refreshMovies()
     }
   }

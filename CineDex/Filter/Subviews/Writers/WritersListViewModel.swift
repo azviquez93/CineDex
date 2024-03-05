@@ -28,6 +28,9 @@ final class WritersListViewModel: ObservableObject {
     let genres = FilterOptionsHandler.shared.genresListViewModel.selectedGenresNames
     let directors = FilterOptionsHandler.shared.directorsListViewModel.selectedDirectorsNames
     let stars = FilterOptionsHandler.shared.starsListViewModel.selectedStarsNames
+    let contentRatings = FilterOptionsHandler.shared.contentRatingsListViewModel.selectedContentRatingsNames
+    let studios = FilterOptionsHandler.shared.studiosListViewModel.selectedStudiosNames
+    let countries = FilterOptionsHandler.shared.countriesListViewModel.selectedCountriesNames
     var predicates = [NSPredicate]()
     
     if genres.count > 0 && !reset {
@@ -43,6 +46,21 @@ final class WritersListViewModel: ObservableObject {
     if stars.count > 0 && !reset {
         let starsPredicate = NSPredicate(format: "ANY stars.star.person.name IN %@", stars)
         predicates.append(starsPredicate)
+    }
+    
+    if contentRatings.count > 0 && !reset {
+        let contentRatingsPredicate = NSPredicate(format: "ANY contentRating.contentRating.name IN %@", contentRatings)
+        predicates.append(contentRatingsPredicate)
+    }
+    
+    if studios.count > 0 && !reset {
+        let studiosPredicate = NSPredicate(format: "ANY studio.studio.name IN %@", studios)
+        predicates.append(studiosPredicate)
+    }
+    
+    if countries.count > 0 && !reset {
+        let countriesPredicate = NSPredicate(format: "ANY countries.country.name IN %@", countries)
+        predicates.append(countriesPredicate)
     }
 
     if !predicates.isEmpty {

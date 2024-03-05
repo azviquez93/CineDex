@@ -1,16 +1,16 @@
 import SwiftUI
 
-struct WritersListView: View {
+struct CountriesListView: View {
   @State private var searchText: String = ""
-  @ObservedObject var writersListViewModel: WritersListViewModel
+  @ObservedObject var countriesListViewModel: CountriesListViewModel
   @ObservedObject var moviesViewModel: MoviesViewModel
   
   var body: some View {
     VStack {
       List {
-        ForEach($writersListViewModel.writers) { $writer in
-          if searchText.isEmpty || (writer.name.localizedCaseInsensitiveContains(searchText)) {
-            WritersRow(writer: $writer, writersListViewModel: writersListViewModel, moviesViewModel: moviesViewModel)
+        ForEach($countriesListViewModel.countries) { $studio in
+          if searchText.isEmpty || (studio.name.localizedCaseInsensitiveContains(searchText)) {
+            CountriesRow(studio: $studio, countriesListViewModel: countriesListViewModel, moviesViewModel: moviesViewModel)
           }
         }
       }
@@ -19,13 +19,13 @@ struct WritersListView: View {
       Spacer()
       HStack {
           Button {
-            writersListViewModel.refreshWriters(keepSelection: false, reset: false)
+            countriesListViewModel.refreshCountries(keepSelection: false, reset: false)
             FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
             FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors(keepSelection: true, reset: false)
             FilterOptionsHandler.shared.starsListViewModel.refreshStars(keepSelection: true, reset: false)
+            FilterOptionsHandler.shared.writersListViewModel.refreshWriters(keepSelection: true, reset: false)
             FilterOptionsHandler.shared.contentRatingsListViewModel.refreshContentRatings(keepSelection: true, reset: false)
             FilterOptionsHandler.shared.studiosListViewModel.refreshStudios(keepSelection: true, reset: false)
-            FilterOptionsHandler.shared.countriesListViewModel.refreshCountries(keepSelection: true, reset: false)
             moviesViewModel.refreshMovies()
           } label: {
               Text("Restablecer")
@@ -34,21 +34,21 @@ struct WritersListView: View {
           .padding()
       }
     }
-    .navigationTitle("Guionistas")
+    .navigationTitle("Países")
     .navigationBarTitleDisplayMode(.inline)
   }
 }
 
-struct WritersRow: View {
-  @Binding var writer: WriterData
-  @ObservedObject var writersListViewModel: WritersListViewModel
+struct CountriesRow: View {
+  @Binding var studio: CountryData
+  @ObservedObject var countriesListViewModel: CountriesListViewModel
   @ObservedObject var moviesViewModel: MoviesViewModel
   
   var body: some View {
     HStack {
-      Text(writer.name)
+      Text(studio.name)
       Spacer()
-      if writer.selected {
+      if studio.selected {
         Image(systemName: "checkmark")
           .foregroundColor(.blue)
         
@@ -57,13 +57,13 @@ struct WritersRow: View {
     }
     .contentShape(Rectangle())
     .onTapGesture {
-      writer.selected.toggle()
+      studio.selected.toggle()
       FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
       FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors(keepSelection: true, reset: false)
       FilterOptionsHandler.shared.starsListViewModel.refreshStars(keepSelection: true, reset: false)
+      FilterOptionsHandler.shared.writersListViewModel.refreshWriters(keepSelection: true, reset: false)
       FilterOptionsHandler.shared.contentRatingsListViewModel.refreshContentRatings(keepSelection: true, reset: false)
       FilterOptionsHandler.shared.studiosListViewModel.refreshStudios(keepSelection: true, reset: false)
-      FilterOptionsHandler.shared.countriesListViewModel.refreshCountries(keepSelection: true, reset: false)
       moviesViewModel.refreshMovies()
     }
   }

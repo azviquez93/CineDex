@@ -65,18 +65,28 @@ struct MoviesGridView: View {
       .toolbar {
         ToolbarItem(placement: .navigationBarLeading) {
           Button(action: {
-            moviesViewStyle = .list
-          }) {
-            Image(systemName: "list.bullet")
-          }
-        }
-        ToolbarItem(placement: .navigationBarTrailing) {
-          Button(action: {
             showFilters.toggle()
           }) {
             Image(systemName: "line.3.horizontal.decrease.circle")
           }
         }
+        ToolbarItem(placement: .navigationBarTrailing) {
+          Menu {
+            Button(action: {
+              moviesViewStyle = .list
+            }) {
+              Label("Ver como lista", systemImage: "list.bullet")
+            }
+            
+            Divider()
+            
+            SortingMenu()
+            
+          } label: {
+            Image(systemName: "ellipsis.circle")
+          }
+        }
+        
       }
     }
     .sheet(isPresented: $showFilters, content: {

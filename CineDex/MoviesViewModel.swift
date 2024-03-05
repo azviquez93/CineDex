@@ -62,6 +62,18 @@ final class MoviesViewModel: ObservableObject {
       predicates.append(writersPredicate)
     }
     
+    if let contentRatingsPredicate = contentRatingsPredicate() {
+      predicates.append(contentRatingsPredicate)
+    }
+    
+    if let studiosPredicate = studiosPredicate() {
+      predicates.append(studiosPredicate)
+    }
+    
+    if let countriesPredicate = countriesPredicate() {
+      predicates.append(countriesPredicate)
+    }
+    
     // Combine all predicates using AND
     let finalPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     fetchRequest.predicate = finalPredicate
@@ -105,6 +117,33 @@ final class MoviesViewModel: ObservableObject {
       return nil
     }
     return NSPredicate(format: "ANY writers.writer.person.name IN %@", selectedWriters)
+    
+  }
+  
+  private func contentRatingsPredicate() -> NSPredicate? {
+    let selectedContentRatings = FilterOptionsHandler.shared.contentRatingsListViewModel.selectedContentRatingsNames
+    guard !selectedContentRatings.isEmpty else {
+      return nil
+    }
+    return NSPredicate(format: "ANY contentRating.contentRating.name IN %@", selectedContentRatings)
+    
+  }
+  
+  private func studiosPredicate() -> NSPredicate? {
+    let selectedStudios = FilterOptionsHandler.shared.studiosListViewModel.selectedStudiosNames
+    guard !selectedStudios.isEmpty else {
+      return nil
+    }
+    return NSPredicate(format: "ANY studio.studio.name IN %@", selectedStudios)
+    
+  }
+  
+  private func countriesPredicate() -> NSPredicate? {
+    let selectedCountries = FilterOptionsHandler.shared.countriesListViewModel.selectedCountriesNames
+    guard !selectedCountries.isEmpty else {
+      return nil
+    }
+    return NSPredicate(format: "ANY countries.country.name IN %@", selectedCountries)
     
   }
   

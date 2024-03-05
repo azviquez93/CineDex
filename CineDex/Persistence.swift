@@ -93,6 +93,32 @@ struct PersistenceController {
             writer.addToMovies(movieWriter)
           }
         }
+        
+        if let contentRatingInfo = movieInfo.contentRating {
+          let contentRating = createOrFindContentRating(from: contentRatingInfo, in: viewContext)
+          let movieContentRating = MovieContentRating(context: viewContext)
+          movieContentRating.contentRating = contentRating
+          movieContentRating.movie = movie
+          contentRating.addToMovies(movieContentRating)
+        }
+        
+        if let studioInfo = movieInfo.studio {
+          let studio = createOrFindStudio(from: studioInfo, in: viewContext)
+          let movieStudio = MovieStudio(context: viewContext)
+          movieStudio.studio = studio
+          movieStudio.movie = movie
+          studio.addToMovies(movieStudio)
+        }
+        
+        if let countriesInfo = movieInfo.countries {
+          for countryInfo in countriesInfo {
+            let country = createOrFindCountry(from: countryInfo, in: viewContext)
+            let movieCountry = MovieCountry(context: viewContext)
+            movieCountry.country = country
+            movieCountry.movie = movie
+            country.addToMovies(movieCountry)
+          }
+        }
       }
       
       do {
@@ -199,6 +225,27 @@ struct PersistenceController {
     return newGenre
   }
   
+  private func createOrFindCountry(from countryInfo: CountryInfo, in context: NSManagedObjectContext) -> Country {
+    let existingCountriesFetchRequest: NSFetchRequest<Country> = Country.fetchRequest()
+    existingCountriesFetchRequest.predicate = NSPredicate(format: "name == %@", countryInfo.name)
+    
+    do {
+      let existingCountries = try context.fetch(existingCountriesFetchRequest)
+      
+      if let existingCountry = existingCountries.first {
+        return existingCountry // Country already exists, return it
+      }
+    } catch {
+      print("Error fetching existing countries: \(error)")
+    }
+    
+    let newCountry = Country(context: context)
+    
+    newCountry.name = countryInfo.name
+    
+    return newCountry
+  }
+  
   private func createOrFindPerson(from name: String, in context: NSManagedObjectContext) -> Person {
     let existingPersonFetchRequest: NSFetchRequest<Person> = Person.fetchRequest()
     existingPersonFetchRequest.predicate = NSPredicate(format: "name == %@", name)
@@ -218,6 +265,48 @@ struct PersistenceController {
     newPerson.name = name
     
     return newPerson
+  }
+  
+  private func createOrFindContentRating(from contentRatingInfo: ContentRatingInfo, in context: NSManagedObjectContext) -> ContentRating {
+    let existingContentRatingsFetchRequest: NSFetchRequest<ContentRating> = ContentRating.fetchRequest()
+    existingContentRatingsFetchRequest.predicate = NSPredicate(format: "name == %@", contentRatingInfo.name)
+    
+    do {
+      let existingContentRatings = try context.fetch(existingContentRatingsFetchRequest)
+      
+      if let existingContentRating = existingContentRatings.first {
+        return existingContentRating
+      }
+    } catch {
+      print("Error fetching existing content ratings: \(error)")
+    }
+    
+    let newContentRating = ContentRating(context: context)
+    
+    newContentRating.name = contentRatingInfo.name
+    
+    return newContentRating
+  }
+  
+  private func createOrFindStudio(from studioInfo: StudioInfo, in context: NSManagedObjectContext) -> Studio {
+    let existingStudioFetchRequest: NSFetchRequest<Studio> = Studio.fetchRequest()
+    existingStudioFetchRequest.predicate = NSPredicate(format: "name == %@", studioInfo.name)
+    
+    do {
+      let existingStudios = try context.fetch(existingStudioFetchRequest)
+      
+      if let existingStudio = existingStudios.first {
+        return existingStudio
+      }
+    } catch {
+      print("Error fetching existing studios: \(error)")
+    }
+    
+    let newStudio = Studio(context: context)
+    
+    newStudio.name = studioInfo.name
+    
+    return newStudio
   }
   
   // Helper functions to create Metadata and Specification entities

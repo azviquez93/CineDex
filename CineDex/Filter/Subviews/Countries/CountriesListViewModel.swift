@@ -2,35 +2,35 @@ import SwiftUI
 import CoreData
 
 @MainActor
-final class StarsListViewModel: ObservableObject {
-  @Published var stars: [StarData] = []
+final class CountriesListViewModel: ObservableObject {
+  @Published var countries: [CountryData] = []
   
-  var selectedStarsNames: [String] {
-    return stars.filter { $0.selected }.map { $0.name }
+  var selectedCountriesNames: [String] {
+    return countries.filter { $0.selected }.map { $0.name }
   }
   
   var selectedLabel: String {
     get {
-      let selectedStars = stars.filter { $0.selected }
-      if selectedStars.isEmpty {
+      let selectedCountries = countries.filter { $0.selected }
+      if selectedCountries.isEmpty {
         return "Ninguno"
       } else {
-        let selectedStarNames = selectedStars.map { $0.name }
-        return selectedStarNames.joined(separator: ", ")
+        let selectedCountryNames = selectedCountries.map { $0.name }
+        return selectedCountryNames.joined(separator: ", ")
       }
     }
   }
   
-  func refreshStars(keepSelection: Bool, reset: Bool) {
+  func refreshCountries(keepSelection: Bool, reset: Bool) {
     let persistenceController = PersistenceController.shared
     let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
     
     let genres = FilterOptionsHandler.shared.genresListViewModel.selectedGenresNames
     let directors = FilterOptionsHandler.shared.directorsListViewModel.selectedDirectorsNames
+    let stars = FilterOptionsHandler.shared.starsListViewModel.selectedStarsNames
     let writers = FilterOptionsHandler.shared.writersListViewModel.selectedWritersNames
     let contentRatings = FilterOptionsHandler.shared.contentRatingsListViewModel.selectedContentRatingsNames
     let studios = FilterOptionsHandler.shared.studiosListViewModel.selectedStudiosNames
-    let countries = FilterOptionsHandler.shared.countriesListViewModel.selectedCountriesNames
     var predicates = [NSPredicate]()
     
     if genres.count > 0 && !reset {
@@ -41,6 +41,11 @@ final class StarsListViewModel: ObservableObject {
     if directors.count > 0 && !reset {
         let directorsPredicate = NSPredicate(format: "ANY directors.director.person.name IN %@", directors)
         predicates.append(directorsPredicate)
+    }
+
+    if stars.count > 0 && !reset {
+        let starsPredicate = NSPredicate(format: "ANY stars.star.person.name IN %@", stars)
+        predicates.append(starsPredicate)
     }
     
     if writers.count > 0 && !reset {
@@ -57,45 +62,38 @@ final class StarsListViewModel: ObservableObject {
         let studiosPredicate = NSPredicate(format: "ANY studio.studio.name IN %@", studios)
         predicates.append(studiosPredicate)
     }
-    
-    if countries.count > 0 && !reset {
-        let countriesPredicate = NSPredicate(format: "ANY countries.country.name IN %@", countries)
-        predicates.append(countriesPredicate)
-    }
 
     if !predicates.isEmpty {
         let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         fetchRequest.predicate = compoundPredicate
     }
-
+    
     do {
       let moviesWithFilters = try persistenceController.container.viewContext.fetch(fetchRequest)
-      let starsFetchRequest: NSFetchRequest<Star> = Star.fetchRequest()
+      let countriesFetchRequest: NSFetchRequest<Country> = Country.fetchRequest()
       if !reset {
-        starsFetchRequest.predicate = NSPredicate(format: "ANY movies.movie IN %@", moviesWithFilters)
+        countriesFetchRequest.predicate = NSPredicate(format: "ANY movies.movie IN %@", moviesWithFilters)
       }
-      let sortDescriptor = NSSortDescriptor(key: "person.name", ascending: true)
-      starsFetchRequest.sortDescriptors = [sortDescriptor]
-      let starsCD = try persistenceController.container.viewContext.fetch(starsFetchRequest)
+      let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+      countriesFetchRequest.sortDescriptors = [sortDescriptor]
+      let countriesCD = try persistenceController.container.viewContext.fetch(countriesFetchRequest)
       if keepSelection {
-        let selectedStars = selectedStarsNames
-        stars = starsCD.map { star in
-          let isSelected = selectedStars.contains(star.person?.name ?? "")
-          return StarData(name: star.person?.name ?? "Unknown Star", selected: isSelected)
+        let selectedCountries = selectedCountriesNames
+        countries = countriesCD.map { country in
+          let isSelected = selectedCountries.contains(country.name ?? "")
+          return CountryData(name: country.name ?? "Unknown Country", selected: isSelected)
         }
       }
       else {
-        stars = starsCD.map { StarData(name: $0.person?.name ?? "Unknown Star", selected: false) }
+        countries = countriesCD.map { CountryData(name: $0.name ?? "Unknown Country", selected: false) }
       }
     } catch {
-      print("Error fetching stars: \(error)")
+      print("Error fetching directors: \(error)")
     }
   }
-  
-  
 }
 
-struct StarData: Hashable, Identifiable {
+struct CountryData: Hashable, Identifiable {
   let id = UUID()
   var name: String
   var selected: Bool

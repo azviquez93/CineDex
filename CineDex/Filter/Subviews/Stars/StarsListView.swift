@@ -23,6 +23,9 @@ struct StarsListView: View {
             FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
             FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors(keepSelection: true, reset: false)
             FilterOptionsHandler.shared.writersListViewModel.refreshWriters(keepSelection: true, reset: false)
+            FilterOptionsHandler.shared.contentRatingsListViewModel.refreshContentRatings(keepSelection: true, reset: false)
+            FilterOptionsHandler.shared.studiosListViewModel.refreshStudios(keepSelection: true, reset: false)
+            FilterOptionsHandler.shared.countriesListViewModel.refreshCountries(keepSelection: true, reset: false)
             moviesViewModel.refreshMovies()
           } label: {
               Text("Restablecer")
@@ -58,6 +61,9 @@ struct StarsRow: View {
       FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
       FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors(keepSelection: true, reset: false)
       FilterOptionsHandler.shared.writersListViewModel.refreshWriters(keepSelection: true, reset: false)
+      FilterOptionsHandler.shared.contentRatingsListViewModel.refreshContentRatings(keepSelection: true, reset: false)
+      FilterOptionsHandler.shared.studiosListViewModel.refreshStudios(keepSelection: true, reset: false)
+      FilterOptionsHandler.shared.countriesListViewModel.refreshCountries(keepSelection: true, reset: false)
       moviesViewModel.refreshMovies()
     }
   }

@@ -12,7 +12,7 @@ struct MoviesListView: View {
   @ObservedObject var moviesViewModel: MoviesViewModel
   @State private var selectedMovieId: Movie.ID?
   @State private var showFilters: Bool = false
-  @AppStorage("moviesViewStyle") var moviesViewStyle: MoviesViewStyle = .list
+  @AppStorage("moviesViewStyle") var moviesViewStyle: MoviesViewStyle = .list  
   
   func retrieveImagePath(forArtwork artworkName: String) -> String? {
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -64,24 +64,34 @@ struct MoviesListView: View {
       .toolbar {
         ToolbarItem(placement: .navigationBarLeading) {
           Button(action: {
-            moviesViewStyle = .grid
-          }) {
-            Image(systemName: "square.grid.2x2")
-          }
-        }
-        ToolbarItem(placement: .navigationBarTrailing) {
-          Button(action: {
             showFilters.toggle()
           }) {
             Image(systemName: "line.3.horizontal.decrease.circle")
           }
         }
+        ToolbarItem(placement: .navigationBarTrailing) {
+          Menu {
+            Button(action: {
+              moviesViewStyle = .grid
+            }) {
+              Label("Ver como galería", systemImage: "square.grid.2x2")
+            }
+            
+            Divider()
+            
+            SortingMenu()
+            
+          } label: {
+            Image(systemName: "ellipsis.circle")
+          }
+        }
+        
       }
     } detail: {
       if let selectedMovieId = selectedMovieId {
         MovieDetailView(movie: moviesViewModel.movies.first { $0.id == selectedMovieId }!)
       } else {
-        Text("Select a movie")
+        Text("Seleccione una película")
       }
     }
     .sheet(isPresented: $showFilters, content: {

@@ -8,7 +8,7 @@ final class APIFetchHandler {
   
   func fetchAPIData(completion: @escaping () -> Void) {
     
-    let url = "http://192.168.68.107:8000/api/v1/movies"
+    let url = "http://192.168.68.100:8000/api/v1/movies"
     let persistenceController = PersistenceController.shared
     
     AF.request(url, method: .get)
@@ -81,7 +81,7 @@ final class APIFetchHandler {
   }
   
   private func downloadArtwork(from urlString: String, completion: @escaping (Bool) -> Void) {
-    guard let url = URL(string: "http://192.168.68.107:8000/uploads/movies/artworks/\(urlString)") else {
+    guard let url = URL(string: "http://192.168.68.100:8000/uploads/movies/artworks/\(urlString)") else {
       completion(false)
       return
     }
@@ -127,14 +127,15 @@ struct MovieInfo: Codable {
   let metacriticId: String?
   let filmaffinityId: String?
   let letterboxdId: String?
-  let contentRatingId: Int?
-  let studioId: Int?
+  let contentRating: ContentRatingInfo?
+  let studio: StudioInfo?
   let metadata: MetadataInfo
   let specification: SpecificationInfo
   let directors: [DirectorInfo]?
   let genres: [GenreInfo]?
   let stars: [StarInfo]?
   let writers: [WriterInfo]?
+  let countries: [CountryInfo]?
   
   enum CodingKeys: String, CodingKey {
     case id
@@ -145,14 +146,15 @@ struct MovieInfo: Codable {
     case metacriticId = "metacritic_id"
     case filmaffinityId = "filmaffinity_id"
     case letterboxdId = "letterboxd_id"
-    case contentRatingId = "content_rating_id"
-    case studioId = "studio_id"
+    case studio
     case metadata
     case specification
     case directors
     case genres
     case stars
     case writers
+    case contentRating = "content_rating"
+    case countries
   }
 }
 
@@ -181,6 +183,30 @@ struct WriterInfo: Codable {
 }
 
 struct GenreInfo: Codable {
+  let name: String
+  
+  enum CodingKeys: String, CodingKey {
+    case name
+  }
+}
+
+struct CountryInfo: Codable {
+  let name: String
+  
+  enum CodingKeys: String, CodingKey {
+    case name
+  }
+}
+
+struct ContentRatingInfo: Codable {
+  let name: String
+  
+  enum CodingKeys: String, CodingKey {
+    case name
+  }
+}
+
+struct StudioInfo: Codable {
   let name: String
   
   enum CodingKeys: String, CodingKey {

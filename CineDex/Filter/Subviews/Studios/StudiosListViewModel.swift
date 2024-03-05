@@ -2,34 +2,34 @@ import SwiftUI
 import CoreData
 
 @MainActor
-final class StarsListViewModel: ObservableObject {
-  @Published var stars: [StarData] = []
+final class StudiosListViewModel: ObservableObject {
+  @Published var studios: [StudioData] = []
   
-  var selectedStarsNames: [String] {
-    return stars.filter { $0.selected }.map { $0.name }
+  var selectedStudiosNames: [String] {
+    return studios.filter { $0.selected }.map { $0.name }
   }
   
   var selectedLabel: String {
     get {
-      let selectedStars = stars.filter { $0.selected }
-      if selectedStars.isEmpty {
+      let selectedStudios = studios.filter { $0.selected }
+      if selectedStudios.isEmpty {
         return "Ninguno"
       } else {
-        let selectedStarNames = selectedStars.map { $0.name }
-        return selectedStarNames.joined(separator: ", ")
+        let selectedStudioNames = selectedStudios.map { $0.name }
+        return selectedStudioNames.joined(separator: ", ")
       }
     }
   }
   
-  func refreshStars(keepSelection: Bool, reset: Bool) {
+  func refreshStudios(keepSelection: Bool, reset: Bool) {
     let persistenceController = PersistenceController.shared
     let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
     
     let genres = FilterOptionsHandler.shared.genresListViewModel.selectedGenresNames
     let directors = FilterOptionsHandler.shared.directorsListViewModel.selectedDirectorsNames
+    let stars = FilterOptionsHandler.shared.starsListViewModel.selectedStarsNames
     let writers = FilterOptionsHandler.shared.writersListViewModel.selectedWritersNames
     let contentRatings = FilterOptionsHandler.shared.contentRatingsListViewModel.selectedContentRatingsNames
-    let studios = FilterOptionsHandler.shared.studiosListViewModel.selectedStudiosNames
     let countries = FilterOptionsHandler.shared.countriesListViewModel.selectedCountriesNames
     var predicates = [NSPredicate]()
     
@@ -42,6 +42,11 @@ final class StarsListViewModel: ObservableObject {
         let directorsPredicate = NSPredicate(format: "ANY directors.director.person.name IN %@", directors)
         predicates.append(directorsPredicate)
     }
+
+    if stars.count > 0 && !reset {
+        let starsPredicate = NSPredicate(format: "ANY stars.star.person.name IN %@", stars)
+        predicates.append(starsPredicate)
+    }
     
     if writers.count > 0 && !reset {
         let writersPredicate = NSPredicate(format: "ANY writers.writer.person.name IN %@", writers)
@@ -53,11 +58,6 @@ final class StarsListViewModel: ObservableObject {
         predicates.append(contentRatingsPredicate)
     }
     
-    if studios.count > 0 && !reset {
-        let studiosPredicate = NSPredicate(format: "ANY studio.studio.name IN %@", studios)
-        predicates.append(studiosPredicate)
-    }
-    
     if countries.count > 0 && !reset {
         let countriesPredicate = NSPredicate(format: "ANY countries.country.name IN %@", countries)
         predicates.append(countriesPredicate)
@@ -67,35 +67,33 @@ final class StarsListViewModel: ObservableObject {
         let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         fetchRequest.predicate = compoundPredicate
     }
-
+    
     do {
       let moviesWithFilters = try persistenceController.container.viewContext.fetch(fetchRequest)
-      let starsFetchRequest: NSFetchRequest<Star> = Star.fetchRequest()
+      let studiosFetchRequest: NSFetchRequest<Studio> = Studio.fetchRequest()
       if !reset {
-        starsFetchRequest.predicate = NSPredicate(format: "ANY movies.movie IN %@", moviesWithFilters)
+        studiosFetchRequest.predicate = NSPredicate(format: "ANY movies.movie IN %@", moviesWithFilters)
       }
-      let sortDescriptor = NSSortDescriptor(key: "person.name", ascending: true)
-      starsFetchRequest.sortDescriptors = [sortDescriptor]
-      let starsCD = try persistenceController.container.viewContext.fetch(starsFetchRequest)
+      let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+      studiosFetchRequest.sortDescriptors = [sortDescriptor]
+      let studiosCD = try persistenceController.container.viewContext.fetch(studiosFetchRequest)
       if keepSelection {
-        let selectedStars = selectedStarsNames
-        stars = starsCD.map { star in
-          let isSelected = selectedStars.contains(star.person?.name ?? "")
-          return StarData(name: star.person?.name ?? "Unknown Star", selected: isSelected)
+        let selectedStudios = selectedStudiosNames
+        studios = studiosCD.map { studio in
+          let isSelected = selectedStudios.contains(studio.name ?? "")
+          return StudioData(name: studio.name ?? "Unknown Studio", selected: isSelected)
         }
       }
       else {
-        stars = starsCD.map { StarData(name: $0.person?.name ?? "Unknown Star", selected: false) }
+        studios = studiosCD.map { StudioData(name: $0.name ?? "Unknown Studio", selected: false) }
       }
     } catch {
-      print("Error fetching stars: \(error)")
+      print("Error fetching directors: \(error)")
     }
   }
-  
-  
 }
 
-struct StarData: Hashable, Identifiable {
+struct StudioData: Hashable, Identifiable {
   let id = UUID()
   var name: String
   var selected: Bool
