@@ -17,10 +17,10 @@ final class MoviesViewModel: ObservableObject {
     }
   }
   
-  @Published var sortOption: SortOption = .created
-  @Published var sortMode: SortMode = .descending
+  @AppStorage("sortOption") var sortOption: SortOption = .created
+  @AppStorage("sortMode") var sortMode: SortMode = .descending
   
-  var sortDescriptor: NSSortDescriptor = .init(key: "createdAt", ascending: false)
+  var sortDescriptor: NSSortDescriptor?
   
   func updateSortDescriptor() {
     var ascending: Bool
@@ -32,11 +32,25 @@ final class MoviesViewModel: ObservableObject {
     case .year: sortDescriptor = NSSortDescriptor(key: "metadata.year", ascending: ascending)
     case .created: sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: ascending)
     case .title: sortDescriptor = NSSortDescriptor(key: "metadata.originalTitle", ascending: ascending)
-    case .imdbRating: sortDescriptor = NSSortDescriptor(key: "imdb.siteRatingValue", ascending: ascending)
+    case .rating:
+      if let storedRating = UserDefaults.standard.string(forKey: "rating"),
+         let rawValue = Int(storedRating) {
+         let selectedRating = Rating(rawValue: rawValue)
+        switch selectedRating {
+        case .imdb:
+          sortDescriptor = NSSortDescriptor(key: "imdb.siteRatingValue", ascending: ascending)
+        case .rottentomatoesSite:
+          sortDescriptor = NSSortDescriptor(key: "rottentomatoes.siteRatingValue", ascending: ascending)
+        case .rottentomatoesUsers:
+          sortDescriptor = NSSortDescriptor(key: "rottentomatoes.userRatingValue", ascending: ascending)
+        case .none:
+          sortDescriptor = NSSortDescriptor(key: "imdb.siteRatingValue", ascending: ascending)
+        }
+      }
+      
     }
-    refreshMovies()
   }
-
+  
   func formattedYear(year: Int16?) -> String {
     let numberFormatter = NumberFormatter()
     numberFormatter.numberStyle = .none
@@ -50,7 +64,10 @@ final class MoviesViewModel: ObservableObject {
     let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
     
     // Add a sort descriptor to the fetch request
-    fetchRequest.sortDescriptors = [sortDescriptor]
+    updateSortDescriptor()
+    if let sortDescriptor = sortDescriptor {
+      fetchRequest.sortDescriptors = [sortDescriptor]
+    }
     
     // Create a predicate to filter based on the search text
     var predicates: [NSPredicate] = []

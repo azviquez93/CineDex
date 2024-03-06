@@ -20,6 +20,10 @@ struct MovieDetailView: View {
       Text("IMDb: \(viewModel.formattedRating(for: viewModel.movie.imdb?.siteRatingValue))")
         .font(.headline)
         .padding()
+      
+      Text("Rottentomates: \(viewModel.movie.rottentomatoes?.siteRatingValue ?? 0)")
+        .font(.headline)
+        .padding()
         
       Text(viewModel.movie.metadata?.summary ?? "No summary available.")
         .font(.body)

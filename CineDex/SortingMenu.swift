@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum SortOption: Int, CaseIterable, Identifiable {
-  case year = 0, title, created, imdbRating
+  case year = 0, title, created, rating
 
   var id: Int { self.rawValue }
   var label: String {
@@ -9,7 +9,7 @@ enum SortOption: Int, CaseIterable, Identifiable {
     case .year: return "Año"
     case .created: return "Fecha en que se agregó"
     case .title: return "Título"
-    case .imdbRating: return "Calificación IMDb"
+    case .rating: return "Calificación"
     }
   }
 }
@@ -38,7 +38,7 @@ struct SortingMenu: View {
       }
       .onChange(of: self.moviesViewModel.sortOption) {
         // Perform action based on the new sortOption
-        self.moviesViewModel.updateSortDescriptor()
+        self.moviesViewModel.refreshMovies()
       }
       Divider()
       Picker("Sorting mode", selection: self.$moviesViewModel.sortMode) {
@@ -48,7 +48,7 @@ struct SortingMenu: View {
       }
       .onChange(of: self.moviesViewModel.sortMode) {
         // Perform action based on the new sortOption
-        self.moviesViewModel.updateSortDescriptor()
+        self.moviesViewModel.refreshMovies()
       }
     } label: {
       Button(action: {}) {

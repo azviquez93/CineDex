@@ -43,6 +43,7 @@
         <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieGenre" inverseName="movie" inverseEntity="MovieGenre"/>
         <relationship name="imdb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Imdb" inverseName="movie" inverseEntity="Imdb"/>
         <relationship name="metadata" maxCount="1" deletionRule="Cascade" destinationEntity="Metadata" inverseName="movie" inverseEntity="Metadata"/>
+        <relationship name="rottentomatoes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Rottentomatoes" inverseName="movie" inverseEntity="Rottentomatoes"/>
         <relationship name="specification" maxCount="1" deletionRule="Cascade" destinationEntity="Specification" inverseName="movie" inverseEntity="Specification"/>
         <relationship name="stars" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieStar" inverseName="movie" inverseEntity="MovieStar"/>
         <relationship name="studio" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MovieStudio" inverseName="movie" inverseEntity="MovieStudio"/>
@@ -78,6 +79,14 @@
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Rottentomatoes" representedClassName="Rottentomatoes" syncable="YES" codeGenerationType="class">
+        <attribute name="siteId" attributeType="String"/>
+        <attribute name="siteRatingCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="siteRatingValue" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="userRatingCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="userRatingValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="movie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="rottentomatoes" inverseEntity="Movie"/>
     </entity>
     <entity name="Specification" representedClassName="Specification" syncable="YES" codeGenerationType="class">
         <attribute name="audioChannels" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>

@@ -128,6 +128,17 @@ struct PersistenceController {
           imdb.movie = movie
           movie.imdb = imdb
         }
+        
+        if let movieRottentomatoesInfo = movieInfo.rottentomatoes {
+          let rottentomatoes = Rottentomatoes(context: viewContext)
+          rottentomatoes.siteId = movieRottentomatoesInfo.siteId
+          rottentomatoes.siteRatingCount = movieRottentomatoesInfo.siteRatingCount ?? 0
+          rottentomatoes.siteRatingValue = movieRottentomatoesInfo.siteRatingValue ?? 0
+          rottentomatoes.userRatingCount = movieRottentomatoesInfo.userRatingCount ?? 0
+          rottentomatoes.userRatingValue = movieRottentomatoesInfo.userRatingValue ?? 0
+          rottentomatoes.movie = movie
+          movie.rottentomatoes = rottentomatoes
+        }
       }
       
       do {
