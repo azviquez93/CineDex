@@ -1,5 +1,5 @@
-import SwiftUI
 import CoreData
+import SwiftUI
 
 @MainActor
 final class StudiosListViewModel: ObservableObject {
@@ -10,14 +10,12 @@ final class StudiosListViewModel: ObservableObject {
   }
   
   var selectedLabel: String {
-    get {
-      let selectedStudios = studios.filter { $0.selected }
-      if selectedStudios.isEmpty {
-        return "Ninguno"
-      } else {
-        let selectedStudioNames = selectedStudios.map { $0.name }
-        return selectedStudioNames.joined(separator: ", ")
-      }
+    let selectedStudios = studios.filter { $0.selected }
+    if selectedStudios.isEmpty {
+      return "Ninguno"
+    } else {
+      let selectedStudioNames = selectedStudios.map { $0.name }
+      return selectedStudioNames.joined(separator: ", ")
     }
   }
   
@@ -34,38 +32,38 @@ final class StudiosListViewModel: ObservableObject {
     var predicates = [NSPredicate]()
     
     if genres.count > 0 && !reset {
-        let genresPredicate = NSPredicate(format: "ANY genres.genre.name IN %@", genres)
-        predicates.append(genresPredicate)
+      let genresPredicate = NSPredicate(format: "ANY genres.genre.name IN %@", genres)
+      predicates.append(genresPredicate)
     }
     
     if directors.count > 0 && !reset {
-        let directorsPredicate = NSPredicate(format: "ANY directors.director.person.name IN %@", directors)
-        predicates.append(directorsPredicate)
+      let directorsPredicate = NSPredicate(format: "ANY directors.director.person.name IN %@", directors)
+      predicates.append(directorsPredicate)
     }
 
     if stars.count > 0 && !reset {
-        let starsPredicate = NSPredicate(format: "ANY stars.star.person.name IN %@", stars)
-        predicates.append(starsPredicate)
+      let starsPredicate = NSPredicate(format: "ANY stars.star.person.name IN %@", stars)
+      predicates.append(starsPredicate)
     }
     
     if writers.count > 0 && !reset {
-        let writersPredicate = NSPredicate(format: "ANY writers.writer.person.name IN %@", writers)
-        predicates.append(writersPredicate)
+      let writersPredicate = NSPredicate(format: "ANY writers.writer.person.name IN %@", writers)
+      predicates.append(writersPredicate)
     }
     
     if contentRatings.count > 0 && !reset {
-        let contentRatingsPredicate = NSPredicate(format: "ANY contentRating.contentRating.name IN %@", contentRatings)
-        predicates.append(contentRatingsPredicate)
+      let contentRatingsPredicate = NSPredicate(format: "ANY contentRating.contentRating.name IN %@", contentRatings)
+      predicates.append(contentRatingsPredicate)
     }
     
     if countries.count > 0 && !reset {
-        let countriesPredicate = NSPredicate(format: "ANY countries.country.name IN %@", countries)
-        predicates.append(countriesPredicate)
+      let countriesPredicate = NSPredicate(format: "ANY countries.country.name IN %@", countries)
+      predicates.append(countriesPredicate)
     }
 
     if !predicates.isEmpty {
-        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-        fetchRequest.predicate = compoundPredicate
+      let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+      fetchRequest.predicate = compoundPredicate
     }
     
     do {
@@ -83,8 +81,7 @@ final class StudiosListViewModel: ObservableObject {
           let isSelected = selectedStudios.contains(studio.name ?? "")
           return StudioData(name: studio.name ?? "Unknown Studio", selected: isSelected)
         }
-      }
-      else {
+      } else {
         studios = studiosCD.map { StudioData(name: $0.name ?? "Unknown Studio", selected: false) }
       }
     } catch {

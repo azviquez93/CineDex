@@ -2,7 +2,6 @@ import Foundation
 
 @MainActor
 final class FilterOptionsHandler: ObservableObject {
-  
   @Published var genresListViewModel: GenresListViewModel
   @Published var directorsListViewModel: DirectorsListViewModel
   @Published var starsListViewModel: StarsListViewModel
@@ -32,6 +31,4 @@ final class FilterOptionsHandler: ObservableObject {
     studiosListViewModel.refreshStudios(keepSelection: false, reset: true)
     countriesListViewModel.refreshCountries(keepSelection: false, reset: true)
   }
-  
 }
-

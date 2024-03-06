@@ -5,12 +5,11 @@
 //  Created by Andrés Zamora on 23/11/23.
 //
 
-import SwiftUI
 import CoreData
+import SwiftUI
 
 @MainActor
 final class MoviesViewModel: ObservableObject {
-  
   @Published var movies: [Movie] = []
   @Published var searchText: String = "" {
     didSet {
@@ -18,6 +17,25 @@ final class MoviesViewModel: ObservableObject {
     }
   }
   
+  @Published var sortOption: SortOption = .created
+  @Published var sortMode: SortMode = .descending
+  
+  var sortDescriptor: NSSortDescriptor = .init(key: "createdAt", ascending: false)
+  
+  func updateSortDescriptor() {
+    var ascending: Bool
+    switch sortMode {
+    case .ascending: ascending = true
+    case .descending: ascending = false
+    }
+    switch sortOption {
+    case .year: sortDescriptor = NSSortDescriptor(key: "metadata.year", ascending: ascending)
+    case .created: sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: ascending)
+    case .title: sortDescriptor = NSSortDescriptor(key: "metadata.originalTitle", ascending: ascending)
+    }
+    refreshMovies()
+  }
+
   func formattedYear(year: Int16?) -> String {
     let numberFormatter = NumberFormatter()
     numberFormatter.numberStyle = .none
@@ -31,7 +49,6 @@ final class MoviesViewModel: ObservableObject {
     let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
     
     // Add a sort descriptor to the fetch request
-    let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: false) // Change 'true' to 'false' for descending order
     fetchRequest.sortDescriptors = [sortDescriptor]
     
     // Create a predicate to filter based on the search text
@@ -74,12 +91,11 @@ final class MoviesViewModel: ObservableObject {
       predicates.append(countriesPredicate)
     }
     
-    // Combine all predicates using AND
     let finalPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     fetchRequest.predicate = finalPredicate
     
     do {
-      self.movies = try persistenceController.container.viewContext.fetch(fetchRequest)
+      movies = try persistenceController.container.viewContext.fetch(fetchRequest)
     } catch {
       print("Error fetching movies: \(error)")
     }
@@ -99,7 +115,6 @@ final class MoviesViewModel: ObservableObject {
       return nil
     }
     return NSPredicate(format: "ANY directors.director.person.name IN %@", selectedDirectors)
-    
   }
   
   private func starsPredicate() -> NSPredicate? {
@@ -108,7 +123,6 @@ final class MoviesViewModel: ObservableObject {
       return nil
     }
     return NSPredicate(format: "ANY stars.star.person.name IN %@", selectedStars)
-    
   }
   
   private func writersPredicate() -> NSPredicate? {
@@ -117,7 +131,6 @@ final class MoviesViewModel: ObservableObject {
       return nil
     }
     return NSPredicate(format: "ANY writers.writer.person.name IN %@", selectedWriters)
-    
   }
   
   private func contentRatingsPredicate() -> NSPredicate? {
@@ -126,7 +139,6 @@ final class MoviesViewModel: ObservableObject {
       return nil
     }
     return NSPredicate(format: "ANY contentRating.contentRating.name IN %@", selectedContentRatings)
-    
   }
   
   private func studiosPredicate() -> NSPredicate? {
@@ -135,7 +147,6 @@ final class MoviesViewModel: ObservableObject {
       return nil
     }
     return NSPredicate(format: "ANY studio.studio.name IN %@", selectedStudios)
-    
   }
   
   private func countriesPredicate() -> NSPredicate? {
@@ -144,7 +155,5 @@ final class MoviesViewModel: ObservableObject {
       return nil
     }
     return NSPredicate(format: "ANY countries.country.name IN %@", selectedCountries)
-    
   }
-  
 }

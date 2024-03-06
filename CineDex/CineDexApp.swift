@@ -13,7 +13,7 @@ struct CineDexApp: App {
   @ObservedObject var moviesViewModel = MoviesViewModel()
   @AppStorage("appearance") var appearance: Appearance = .automatic
   @AppStorage("moviesViewStyle") var viewStyle: MoviesViewStyle = .list
-  
+
   var body: some Scene {
     WindowGroup {
       MainView(moviesViewModel: moviesViewModel)

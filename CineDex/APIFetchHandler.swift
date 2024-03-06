@@ -3,16 +3,14 @@ import CoreData
 import Foundation
 
 final class APIFetchHandler {
-  
   static let shared = APIFetchHandler()
   
   func fetchAPIData(completion: @escaping () -> Void) {
-    
     let url = "http://192.168.68.100:8000/api/v1/movies"
     let persistenceController = PersistenceController.shared
     
     AF.request(url, method: .get)
-      .validate(statusCode:  200..<300)
+      .validate(statusCode: 200 ..< 300)
       .responseDecodable(of: [MovieInfo].self) { response in
         switch response.result {
         case .success(let movieDataArray):
@@ -115,7 +113,6 @@ final class APIFetchHandler {
       }
     }
   }
-  
 }
 
 struct MovieInfo: Codable {

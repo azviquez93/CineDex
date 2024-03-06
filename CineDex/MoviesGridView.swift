@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MoviesGridView: View {
-  
   @ObservedObject var moviesViewModel: MoviesViewModel
   @State private var showFilters: Bool = false
   @AppStorage("moviesViewStyle") var moviesViewStyle: MoviesViewStyle = .grid
@@ -20,12 +19,9 @@ struct MoviesGridView: View {
   func retrieveImagePath(forArtwork artworkName: String) -> String? {
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     let fileURL = documentsDirectory.appendingPathComponent(artworkName)
-    
-    // Check if the file exists at the given path
     if FileManager.default.fileExists(atPath: fileURL.path) {
       return fileURL.path
     }
-    
     return nil
   }
   
@@ -46,9 +42,8 @@ struct MoviesGridView: View {
                   } placeholder: {
                     ProgressView()
                   }
-                  .frame(width:  80, height:  120)
+                  .frame(width: 80, height: 120)
                   .cornerRadius(10)
-                  
                 }
                 Text(movie.metadata?.originalTitle ?? "")
                   .font(.subheadline)
@@ -60,7 +55,7 @@ struct MoviesGridView: View {
           }
         }
       }
-      .navigationTitle("Películas")
+      .navigationTitle("Películas (\(NumberFormatter().string(from: moviesViewModel.movies.count as NSNumber)!))")
       .searchable(text: $moviesViewModel.searchText, prompt: "Buscar")
       .toolbar {
         ToolbarItem(placement: .navigationBarLeading) {
@@ -80,13 +75,12 @@ struct MoviesGridView: View {
             
             Divider()
             
-            SortingMenu()
+            SortingMenu(moviesViewModel: moviesViewModel)
             
           } label: {
             Image(systemName: "ellipsis.circle")
           }
         }
-        
       }
     }
     .sheet(isPresented: $showFilters, content: {

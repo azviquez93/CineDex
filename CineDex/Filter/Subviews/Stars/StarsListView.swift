@@ -18,20 +18,20 @@ struct StarsListView: View {
       .searchable(text: $searchText, prompt: "Buscar")
       Spacer()
       HStack {
-          Button {
-            starsListViewModel.refreshStars(keepSelection: false, reset: false)
-            FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
-            FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors(keepSelection: true, reset: false)
-            FilterOptionsHandler.shared.writersListViewModel.refreshWriters(keepSelection: true, reset: false)
-            FilterOptionsHandler.shared.contentRatingsListViewModel.refreshContentRatings(keepSelection: true, reset: false)
-            FilterOptionsHandler.shared.studiosListViewModel.refreshStudios(keepSelection: true, reset: false)
-            FilterOptionsHandler.shared.countriesListViewModel.refreshCountries(keepSelection: true, reset: false)
-            moviesViewModel.refreshMovies()
-          } label: {
-              Text("Restablecer")
-              .foregroundColor(.red)
-          }
-          .padding()
+        Button {
+          starsListViewModel.refreshStars(keepSelection: false, reset: false)
+          FilterOptionsHandler.shared.genresListViewModel.refreshGenres(keepSelection: true, reset: false)
+          FilterOptionsHandler.shared.directorsListViewModel.refreshDirectors(keepSelection: true, reset: false)
+          FilterOptionsHandler.shared.writersListViewModel.refreshWriters(keepSelection: true, reset: false)
+          FilterOptionsHandler.shared.contentRatingsListViewModel.refreshContentRatings(keepSelection: true, reset: false)
+          FilterOptionsHandler.shared.studiosListViewModel.refreshStudios(keepSelection: true, reset: false)
+          FilterOptionsHandler.shared.countriesListViewModel.refreshCountries(keepSelection: true, reset: false)
+          moviesViewModel.refreshMovies()
+        } label: {
+          Text("Restablecer")
+            .foregroundColor(.red)
+        }
+        .padding()
       }
     }
     .navigationTitle("Reparto")
@@ -51,9 +51,7 @@ struct StarsRow: View {
       if star.selected {
         Image(systemName: "checkmark")
           .foregroundColor(.blue)
-        
       }
-      
     }
     .contentShape(Rectangle())
     .onTapGesture {

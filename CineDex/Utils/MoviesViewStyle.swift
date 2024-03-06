@@ -9,9 +9,9 @@ import SwiftUI
 
 enum MoviesViewStyle: Int, CaseIterable, Identifiable {
   case list, grid
-  
+
   var id: Int { rawValue }
-  
+
   var name: String {
     switch self {
     case .list: return "Lista"

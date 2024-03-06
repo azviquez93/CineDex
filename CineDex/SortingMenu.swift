@@ -1,12 +1,13 @@
 import SwiftUI
 
 enum SortOption: Int, CaseIterable, Identifiable {
-  case year = 0, title
-  
+  case year = 0, title, created
+
   var id: Int { self.rawValue }
   var label: String {
     switch self {
     case .year: return "Año"
+    case .created: return "Fecha en que se agregó"
     case .title: return "Título"
     }
   }
@@ -14,7 +15,7 @@ enum SortOption: Int, CaseIterable, Identifiable {
 
 enum SortMode: Int, CaseIterable, Identifiable {
   case ascending = 0, descending
-  
+
   var id: Int { self.rawValue }
   var label: String {
     switch self {
@@ -25,34 +26,33 @@ enum SortMode: Int, CaseIterable, Identifiable {
 }
 
 struct SortingMenu: View {
-  @State private var sortOption: SortOption = .year
-  @State private var sortMode: SortMode = .ascending
-  
+  @ObservedObject var moviesViewModel: MoviesViewModel
+
   var body: some View {
     Menu {
-      Picker("Sorting options", selection: $sortOption) {
+      Picker("Sorting options", selection: self.$moviesViewModel.sortOption) {
         ForEach(SortOption.allCases) { option in
           Text(option.label).tag(option)
         }
       }
-      .onChange(of: sortOption) {
+      .onChange(of: self.moviesViewModel.sortOption) {
         // Perform action based on the new sortOption
-        print("Sort option changed to: \(sortOption.label)")
+        self.moviesViewModel.updateSortDescriptor()
       }
       Divider()
-      Picker("Sorting mode", selection: $sortMode) {
+      Picker("Sorting mode", selection: self.$moviesViewModel.sortMode) {
         ForEach(SortMode.allCases) { mode in
           Text(mode.label).tag(mode)
         }
       }
-      .onChange(of: sortMode) {
+      .onChange(of: self.moviesViewModel.sortMode) {
         // Perform action based on the new sortOption
-        print("Sort option changed to: \(sortMode.label)")
+        self.moviesViewModel.updateSortDescriptor()
       }
     } label: {
       Button(action: {}) {
         Text("Ordenar por")
-        Text(sortOption.label)
+        Text(self.moviesViewModel.sortOption.label)
         Image(systemName: "arrow.up.arrow.down")
       }
     }

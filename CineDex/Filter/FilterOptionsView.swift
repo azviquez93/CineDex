@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct FilterOptionsView: View {
-  
   @ObservedObject var genresListViewModel = FilterOptionsHandler.shared.genresListViewModel
   @ObservedObject var directorsListViewModel = FilterOptionsHandler.shared.directorsListViewModel
   @ObservedObject var starsListViewModel = FilterOptionsHandler.shared.starsListViewModel

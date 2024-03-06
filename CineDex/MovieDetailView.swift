@@ -9,17 +9,17 @@ struct MovieDetailView: View {
   
   var body: some View {
     List {
-        Text(viewModel.movie.metadata?.originalTitle ?? "Unknown Title")
-          .font(.title)
-          .padding()
+      Text(viewModel.movie.metadata?.originalTitle ?? "Unknown Title")
+        .font(.title)
+        .padding()
         
-        Text(viewModel.formattedYear)
-          .font(.headline)
-          .padding()
+      Text(viewModel.formattedYear)
+        .font(.headline)
+        .padding()
         
-        Text(viewModel.movie.metadata?.summary ?? "No summary available.")
-          .font(.body)
-          .padding()
+      Text(viewModel.movie.metadata?.summary ?? "No summary available.")
+        .font(.body)
+        .padding()
     }
     .listStyle(.plain)
   }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SettingsView: View {
-  
   @AppStorage("appearance") var appearance: Appearance = .automatic
   @AppStorage("moviesViewStyle") var moviesViewStyle: MoviesViewStyle = .list
   @ObservedObject var moviesViewModel: MoviesViewModel
@@ -16,23 +15,18 @@ struct SettingsView: View {
   var body: some View {
     NavigationStack {
       List {
-        
         Section(header: Text("Aspecto")) {
-            Picker("Aspecto", selection: $appearance) {
-              ForEach(Appearance.allCases) { appearance in
-                Text(appearance.name).tag(appearance)
-              }
+          Picker("Aspecto", selection: $appearance) {
+            ForEach(Appearance.allCases) { appearance in
+              Text(appearance.name).tag(appearance)
             }
-            .pickerStyle(.segmented)
+          }
+          .pickerStyle(.segmented)
         }
-        
         Section {
           Button("Recargar películas") {
             refreshMovies()
           }
-        }
-        
-        Section {
           Button("Recargar pósters") {
             refreshArtworks()
           }
@@ -55,5 +49,4 @@ struct SettingsView: View {
       print("Descarga completa")
     }
   }
-  
 }

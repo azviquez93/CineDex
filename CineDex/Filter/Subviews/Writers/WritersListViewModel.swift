@@ -1,5 +1,5 @@
-import SwiftUI
 import CoreData
+import SwiftUI
 
 @MainActor
 final class WritersListViewModel: ObservableObject {
@@ -10,14 +10,12 @@ final class WritersListViewModel: ObservableObject {
   }
   
   var selectedLabel: String {
-    get {
-      let selectedWriters = writers.filter { $0.selected }
-      if selectedWriters.isEmpty {
-        return "Ninguno"
-      } else {
-        let selectedWriterNames = selectedWriters.map { $0.name }
-        return selectedWriterNames.joined(separator: ", ")
-      }
+    let selectedWriters = writers.filter { $0.selected }
+    if selectedWriters.isEmpty {
+      return "Ninguno"
+    } else {
+      let selectedWriterNames = selectedWriters.map { $0.name }
+      return selectedWriterNames.joined(separator: ", ")
     }
   }
   
@@ -34,38 +32,38 @@ final class WritersListViewModel: ObservableObject {
     var predicates = [NSPredicate]()
     
     if genres.count > 0 && !reset {
-        let genresPredicate = NSPredicate(format: "ANY genres.genre.name IN %@", genres)
-        predicates.append(genresPredicate)
+      let genresPredicate = NSPredicate(format: "ANY genres.genre.name IN %@", genres)
+      predicates.append(genresPredicate)
     }
     
     if directors.count > 0 && !reset {
-        let directorsPredicate = NSPredicate(format: "ANY directors.director.person.name IN %@", directors)
-        predicates.append(directorsPredicate)
+      let directorsPredicate = NSPredicate(format: "ANY directors.director.person.name IN %@", directors)
+      predicates.append(directorsPredicate)
     }
     
     if stars.count > 0 && !reset {
-        let starsPredicate = NSPredicate(format: "ANY stars.star.person.name IN %@", stars)
-        predicates.append(starsPredicate)
+      let starsPredicate = NSPredicate(format: "ANY stars.star.person.name IN %@", stars)
+      predicates.append(starsPredicate)
     }
     
     if contentRatings.count > 0 && !reset {
-        let contentRatingsPredicate = NSPredicate(format: "ANY contentRating.contentRating.name IN %@", contentRatings)
-        predicates.append(contentRatingsPredicate)
+      let contentRatingsPredicate = NSPredicate(format: "ANY contentRating.contentRating.name IN %@", contentRatings)
+      predicates.append(contentRatingsPredicate)
     }
     
     if studios.count > 0 && !reset {
-        let studiosPredicate = NSPredicate(format: "ANY studio.studio.name IN %@", studios)
-        predicates.append(studiosPredicate)
+      let studiosPredicate = NSPredicate(format: "ANY studio.studio.name IN %@", studios)
+      predicates.append(studiosPredicate)
     }
     
     if countries.count > 0 && !reset {
-        let countriesPredicate = NSPredicate(format: "ANY countries.country.name IN %@", countries)
-        predicates.append(countriesPredicate)
+      let countriesPredicate = NSPredicate(format: "ANY countries.country.name IN %@", countries)
+      predicates.append(countriesPredicate)
     }
 
     if !predicates.isEmpty {
-        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-        fetchRequest.predicate = compoundPredicate
+      let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+      fetchRequest.predicate = compoundPredicate
     }
 
     do {
@@ -83,16 +81,13 @@ final class WritersListViewModel: ObservableObject {
           let isSelected = selectedWriters.contains(writer.person?.name ?? "")
           return WriterData(name: writer.person?.name ?? "Unknown Writer", selected: isSelected)
         }
-      }
-      else {
+      } else {
         writers = writersCD.map { WriterData(name: $0.person?.name ?? "Unknown Writer", selected: false) }
       }
     } catch {
       print("Error fetching writers: \(error)")
     }
   }
-  
-  
 }
 
 struct WriterData: Hashable, Identifiable {

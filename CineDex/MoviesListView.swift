@@ -8,27 +8,23 @@
 import SwiftUI
 
 struct MoviesListView: View {
-  
   @ObservedObject var moviesViewModel: MoviesViewModel
   @State private var selectedMovieId: Movie.ID?
   @State private var showFilters: Bool = false
-  @AppStorage("moviesViewStyle") var moviesViewStyle: MoviesViewStyle = .list  
+  @AppStorage("moviesViewStyle") var moviesViewStyle: MoviesViewStyle = .list
   
   func retrieveImagePath(forArtwork artworkName: String) -> String? {
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     let fileURL = documentsDirectory.appendingPathComponent(artworkName)
-    
-    // Check if the file exists at the given path
     if FileManager.default.fileExists(atPath: fileURL.path) {
       return fileURL.path
     }
-    
     return nil
   }
   
   var body: some View {
     NavigationSplitView {
-      List (moviesViewModel.movies, selection: $selectedMovieId) { movie in
+      List(moviesViewModel.movies, selection: $selectedMovieId) { movie in
         HStack {
           if let artworkPath = retrieveImagePath(forArtwork: movie.metadata?.artwork ?? "") {
             // Create a URL from the file path
@@ -39,11 +35,9 @@ struct MoviesListView: View {
             } placeholder: {
               ProgressView()
             }
-            .frame(width:  50, height:  70)
+            .frame(width: 50, height: 70)
             .cornerRadius(10)
-            
-          }
-          else {
+          } else {
             Image(systemName: "photo")
               .resizable()
               .aspectRatio(contentMode: .fit)
@@ -59,7 +53,7 @@ struct MoviesListView: View {
         }
       }
       .searchable(text: $moviesViewModel.searchText, prompt: "Buscar")
-      .navigationTitle("Películas")
+      .navigationTitle("Películas (\(NumberFormatter().string(from: moviesViewModel.movies.count as NSNumber)!))")
       .listStyle(.plain)
       .toolbar {
         ToolbarItem(placement: .navigationBarLeading) {
@@ -79,13 +73,12 @@ struct MoviesListView: View {
             
             Divider()
             
-            SortingMenu()
+            SortingMenu(moviesViewModel: moviesViewModel)
             
           } label: {
             Image(systemName: "ellipsis.circle")
           }
         }
-        
       }
     } detail: {
       if let selectedMovieId = selectedMovieId {
@@ -98,5 +91,4 @@ struct MoviesListView: View {
       FilterOptionsView(moviesViewModel: moviesViewModel)
     })
   }
-  
 }
