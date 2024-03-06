@@ -119,6 +119,15 @@ struct PersistenceController {
             country.addToMovies(movieCountry)
           }
         }
+        
+        if let movieImdbInfo = movieInfo.imdb {
+          let imdb = Imdb(context: viewContext)
+          imdb.siteId = movieImdbInfo.siteId
+          imdb.siteRatingCount = movieImdbInfo.siteRatingCount ?? 0
+          imdb.siteRatingValue = movieImdbInfo.siteRatingValue ?? 0
+          imdb.movie = movie
+          movie.imdb = imdb
+        }
       }
       
       do {

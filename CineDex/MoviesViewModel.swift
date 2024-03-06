@@ -32,6 +32,7 @@ final class MoviesViewModel: ObservableObject {
     case .year: sortDescriptor = NSSortDescriptor(key: "metadata.year", ascending: ascending)
     case .created: sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: ascending)
     case .title: sortDescriptor = NSSortDescriptor(key: "metadata.originalTitle", ascending: ascending)
+    case .imdbRating: sortDescriptor = NSSortDescriptor(key: "imdb.siteRatingValue", ascending: ascending)
     }
     refreshMovies()
   }

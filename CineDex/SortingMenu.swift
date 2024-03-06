@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum SortOption: Int, CaseIterable, Identifiable {
-  case year = 0, title, created
+  case year = 0, title, created, imdbRating
 
   var id: Int { self.rawValue }
   var label: String {
@@ -9,6 +9,7 @@ enum SortOption: Int, CaseIterable, Identifiable {
     case .year: return "Año"
     case .created: return "Fecha en que se agregó"
     case .title: return "Título"
+    case .imdbRating: return "Calificación IMDb"
     }
   }
 }

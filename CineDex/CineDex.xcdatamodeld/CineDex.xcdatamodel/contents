@@ -16,6 +16,12 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieGenre" inverseName="genre" inverseEntity="MovieGenre"/>
     </entity>
+    <entity name="Imdb" representedClassName="Imdb" syncable="YES" codeGenerationType="class">
+        <attribute name="siteId" attributeType="String"/>
+        <attribute name="siteRatingCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="siteRatingValue" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="movie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="imdb" inverseEntity="Movie"/>
+    </entity>
     <entity name="Metadata" representedClassName="Metadata" syncable="YES" codeGenerationType="class">
         <attribute name="addedAt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="alternativeTitle" optional="YES" attributeType="String"/>
@@ -35,6 +41,7 @@
         <relationship name="countries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieCountry" inverseName="movie" inverseEntity="MovieCountry"/>
         <relationship name="directors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieDirector" inverseName="movie" inverseEntity="MovieDirector"/>
         <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieGenre" inverseName="movie" inverseEntity="MovieGenre"/>
+        <relationship name="imdb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Imdb" inverseName="movie" inverseEntity="Imdb"/>
         <relationship name="metadata" maxCount="1" deletionRule="Cascade" destinationEntity="Metadata" inverseName="movie" inverseEntity="Metadata"/>
         <relationship name="specification" maxCount="1" deletionRule="Cascade" destinationEntity="Specification" inverseName="movie" inverseEntity="Specification"/>
         <relationship name="stars" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieStar" inverseName="movie" inverseEntity="MovieStar"/>

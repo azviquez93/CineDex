@@ -119,7 +119,7 @@ struct MovieInfo: Codable {
   let id: Int64
   let createdAt: String
   let updatedAt: String
-  let imdbId: String?
+  let imdb: ImdbInfo?
   let rottentomatoesId: String?
   let metacriticId: String?
   let filmaffinityId: String?
@@ -138,7 +138,7 @@ struct MovieInfo: Codable {
     case id
     case createdAt = "created_at"
     case updatedAt = "updated_at"
-    case imdbId = "imdb_id"
+    case imdb
     case rottentomatoesId = "rottentomatoes_id"
     case metacriticId = "metacritic_id"
     case filmaffinityId = "filmaffinity_id"
@@ -208,6 +208,18 @@ struct StudioInfo: Codable {
   
   enum CodingKeys: String, CodingKey {
     case name
+  }
+}
+
+struct ImdbInfo: Codable {
+  let siteId: String
+  let siteRatingCount: Int64?
+  let siteRatingValue: Double?
+  
+  enum CodingKeys: String, CodingKey {
+    case siteId = "id"
+    case siteRatingCount = "site_rating_count"
+    case siteRatingValue = "site_rating_value"
   }
 }
 
