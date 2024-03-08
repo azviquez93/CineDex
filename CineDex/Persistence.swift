@@ -120,24 +120,53 @@ struct PersistenceController {
           }
         }
         
-        if let movieImdbInfo = movieInfo.imdb {
+        if let imdbInfo = movieInfo.imdb {
           let imdb = Imdb(context: viewContext)
-          imdb.siteId = movieImdbInfo.siteId
-          imdb.siteRatingCount = movieImdbInfo.siteRatingCount ?? 0
-          imdb.siteRatingValue = movieImdbInfo.siteRatingValue ?? 0
+          imdb.siteId = imdbInfo.siteId
+          imdb.siteRatingCount = imdbInfo.siteRatingCount ?? 0
+          imdb.siteRatingValue = imdbInfo.siteRatingValue ?? 0
           imdb.movie = movie
           movie.imdb = imdb
         }
         
-        if let movieRottentomatoesInfo = movieInfo.rottentomatoes {
+        if let rottentomatoesInfo = movieInfo.rottentomatoes {
           let rottentomatoes = Rottentomatoes(context: viewContext)
-          rottentomatoes.siteId = movieRottentomatoesInfo.siteId
-          rottentomatoes.siteRatingCount = movieRottentomatoesInfo.siteRatingCount ?? 0
-          rottentomatoes.siteRatingValue = movieRottentomatoesInfo.siteRatingValue ?? 0
-          rottentomatoes.userRatingCount = movieRottentomatoesInfo.userRatingCount ?? 0
-          rottentomatoes.userRatingValue = movieRottentomatoesInfo.userRatingValue ?? 0
+          rottentomatoes.siteId = rottentomatoesInfo.siteId
+          rottentomatoes.siteRatingCount = rottentomatoesInfo.siteRatingCount ?? 0
+          rottentomatoes.siteRatingValue = rottentomatoesInfo.siteRatingValue ?? 0
+          rottentomatoes.userRatingCount = rottentomatoesInfo.userRatingCount ?? 0
+          rottentomatoes.userRatingValue = rottentomatoesInfo.userRatingValue ?? 0
           rottentomatoes.movie = movie
           movie.rottentomatoes = rottentomatoes
+        }
+        
+        if let metacriticInfo = movieInfo.metacritic {
+          let metacritic = Metacritic(context: viewContext)
+          metacritic.siteId = metacriticInfo.siteId
+          metacritic.siteRatingCount = metacriticInfo.siteRatingCount ?? 0
+          metacritic.siteRatingValue = metacriticInfo.siteRatingValue ?? 0
+          metacritic.userRatingCount = metacriticInfo.userRatingCount ?? 0
+          metacritic.userRatingValue = metacriticInfo.userRatingValue ?? 0
+          metacritic.movie = movie
+          movie.metacritic = metacritic
+        }
+        
+        if let filmaffinityInfo = movieInfo.filmaffinity {
+          let filmaffinity = Filmaffinity(context: viewContext)
+          filmaffinity.siteId = filmaffinityInfo.siteId
+          filmaffinity.siteRatingCount = filmaffinityInfo.siteRatingCount ?? 0
+          filmaffinity.siteRatingValue = filmaffinityInfo.siteRatingValue ?? 0
+          filmaffinity.movie = movie
+          movie.filmaffinity = filmaffinity
+        }
+        
+        if let letterboxdInfo = movieInfo.letterboxd {
+          let letterboxd = Letterboxd(context: viewContext)
+          letterboxd.siteId = letterboxdInfo.siteId
+          letterboxd.siteRatingCount = letterboxdInfo.siteRatingCount ?? 0
+          letterboxd.siteRatingValue = letterboxdInfo.siteRatingValue ?? 0
+          letterboxd.movie = movie
+          movie.letterboxd = letterboxd
         }
       }
       

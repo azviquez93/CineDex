@@ -121,9 +121,9 @@ struct MovieInfo: Codable {
   let updatedAt: String
   let imdb: ImdbInfo?
   let rottentomatoes: RottentomatoesInfo?
-  let metacriticId: String?
-  let filmaffinityId: String?
-  let letterboxdId: String?
+  let metacritic: MetacriticInfo?
+  let filmaffinity: FilmaffinityInfo?
+  let letterboxd: LetterboxdInfo?
   let contentRating: ContentRatingInfo?
   let studio: StudioInfo?
   let metadata: MetadataInfo
@@ -140,9 +140,9 @@ struct MovieInfo: Codable {
     case updatedAt = "updated_at"
     case imdb
     case rottentomatoes
-    case metacriticId = "metacritic_id"
-    case filmaffinityId = "filmaffinity_id"
-    case letterboxdId = "letterboxd_id"
+    case metacritic
+    case filmaffinity
+    case letterboxd
     case studio
     case metadata
     case specification
@@ -220,6 +220,46 @@ struct ImdbInfo: Codable {
     case siteId = "id"
     case siteRatingCount = "site_rating_count"
     case siteRatingValue = "site_rating_value"
+  }
+}
+
+struct FilmaffinityInfo: Codable {
+  let siteId: String
+  let siteRatingCount: Int64?
+  let siteRatingValue: Double?
+  
+  enum CodingKeys: String, CodingKey {
+    case siteId = "id"
+    case siteRatingCount = "site_rating_count"
+    case siteRatingValue = "site_rating_value"
+  }
+}
+
+struct LetterboxdInfo: Codable {
+  let siteId: String
+  let siteRatingCount: Int64?
+  let siteRatingValue: Double?
+  
+  enum CodingKeys: String, CodingKey {
+    case siteId = "id"
+    case siteRatingCount = "site_rating_count"
+    case siteRatingValue = "site_rating_value"
+  }
+}
+
+struct MetacriticInfo: Codable {
+  let siteId: String
+  let siteRatingCount: Int64?
+  let siteRatingValue: Int16?
+  let userRatingCount: Int64?
+  let userRatingValue: Double?
+  
+  enum CodingKeys: String, CodingKey {
+    case siteId = "id"
+    case siteRatingCount = "site_rating_count"
+    case siteRatingValue = "site_rating_value"
+    case userRatingCount = "user_rating_count"
+    case userRatingValue = "user_rating_value"
   }
 }
 

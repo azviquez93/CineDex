@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Rating: Int, CaseIterable, Identifiable {
-  case imdb, rottentomatoesSite, rottentomatoesUsers
+  case imdb, rottentomatoesSite, rottentomatoesUsers, metacriticSite, metacriticUsers, filmaffinity, letterboxd
 
   var id: Int { rawValue }
 
@@ -17,6 +17,10 @@ enum Rating: Int, CaseIterable, Identifiable {
     case .imdb: return "IMDb"
     case .rottentomatoesSite: return "Rotten Tomatoes (Críticos)"
     case .rottentomatoesUsers: return "Rotten Tomatoes (Audiencia)"
+    case .metacriticSite: return "Metacritic (Críticos)"
+    case .metacriticUsers: return "Metacritic (Audiencia)"
+    case .filmaffinity: return "Filmaffinity"
+    case .letterboxd: return "Letterboxd"
     }
   }
 }

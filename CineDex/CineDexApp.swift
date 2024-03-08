@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct CineDexApp: App {
@@ -13,6 +14,8 @@ struct CineDexApp: App {
   @ObservedObject var moviesViewModel = MoviesViewModel()
   @AppStorage("appearance") var appearance: Appearance = .automatic
   @AppStorage("moviesViewStyle") var viewStyle: MoviesViewStyle = .list
+  
+  @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
   var body: some Scene {
     WindowGroup {
@@ -20,5 +23,13 @@ struct CineDexApp: App {
         .preferredColorScheme(appearance.getColorScheme())
         .environment(\.managedObjectContext, persistenceController.container.viewContext)
     }
+  }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    FirebaseApp.configure()
+    return true
   }
 }

@@ -47,6 +47,14 @@ struct MoviesListView: View {
           VStack(alignment: .leading) {
             Text(movie.metadata?.originalTitle ?? "Unknown Title")
               .font(.headline)
+              .lineLimit(1) // Limit to one line
+              .truncationMode(.tail) // Truncate at the end
+            if let alternativeTitle = movie.metadata?.alternativeTitle {
+              Text(alternativeTitle)
+                .font(.subheadline)
+                .lineLimit(1) // Limit to one line
+                .truncationMode(.tail) // Truncate at the end
+            }
             Text("\(moviesViewModel.formattedYear(year: movie.metadata?.year))")
               .foregroundColor(.secondary)
           }

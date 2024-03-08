@@ -43,6 +43,14 @@ final class MoviesViewModel: ObservableObject {
           sortDescriptor = NSSortDescriptor(key: "rottentomatoes.siteRatingValue", ascending: ascending)
         case .rottentomatoesUsers:
           sortDescriptor = NSSortDescriptor(key: "rottentomatoes.userRatingValue", ascending: ascending)
+        case .metacriticSite:
+          sortDescriptor = NSSortDescriptor(key: "metacritic.siteRatingValue", ascending: ascending)
+        case .metacriticUsers:
+          sortDescriptor = NSSortDescriptor(key: "metacritic.userRatingValue", ascending: ascending)
+        case .filmaffinity:
+          sortDescriptor = NSSortDescriptor(key: "filmaffinity.siteRatingValue", ascending: ascending)
+        case .letterboxd:
+          sortDescriptor = NSSortDescriptor(key: "letterboxd.siteRatingValue", ascending: ascending)
         case .none:
           sortDescriptor = NSSortDescriptor(key: "imdb.siteRatingValue", ascending: ascending)
         }
