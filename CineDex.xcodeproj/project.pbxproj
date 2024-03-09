@@ -30,9 +30,14 @@
 		779490DD2B9B98F900AD8C92 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 779490DC2B9B98F900AD8C92 /* GoogleService-Info.plist */; };
 		779490E02B9B9A3C00AD8C92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 779490DF2B9B9A3C00AD8C92 /* FirebaseAnalytics */; };
 		779490E22B9B9A3C00AD8C92 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 779490E12B9B9A3C00AD8C92 /* FirebaseAnalyticsSwift */; };
+		779490E52B9B9DFF00AD8C92 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 779490E42B9B9DFF00AD8C92 /* FirebaseAuth */; };
+		779490E82B9B9E8200AD8C92 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779490E72B9B9E8200AD8C92 /* AuthenticationView.swift */; };
+		779490EA2B9B9FA300AD8C92 /* SignInEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779490E92B9B9FA300AD8C92 /* SignInEmailView.swift */; };
+		779490EC2B9BA11A00AD8C92 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779490EB2B9BA11A00AD8C92 /* AuthenticationManager.swift */; };
 		779E31A42B941AB300644A72 /* WritersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779E31A32B941AB300644A72 /* WritersListView.swift */; };
 		779E31A72B941AFD00644A72 /* WritersListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779E31A62B941AFD00644A72 /* WritersListViewModel.swift */; };
 		77AB74852B8F051100FC9A5F /* FilterOptionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AB74842B8F051100FC9A5F /* FilterOptionsHandler.swift */; };
+		77CBEF9D2B9BF4EF00602B59 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CBEF9C2B9BF4EF00602B59 /* RootView.swift */; };
 		77D176172B886678000CC8DB /* GenresListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D176162B886678000CC8DB /* GenresListViewModel.swift */; };
 		77D5C3212B8E97A300A142A4 /* DirectorsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D5C3202B8E97A300A142A4 /* DirectorsListViewModel.swift */; };
 		77E2D1852B857ECB00E996E4 /* CineDexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E2D1842B857ECB00E996E4 /* CineDexApp.swift */; };
@@ -90,9 +95,13 @@
 		778CE0132B871C31008DF74C /* DirectorsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorsListView.swift; sourceTree = "<group>"; };
 		778CE0152B871CB7008DF74C /* GenresListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresListView.swift; sourceTree = "<group>"; };
 		779490DC2B9B98F900AD8C92 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		779490E72B9B9E8200AD8C92 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		779490E92B9B9FA300AD8C92 /* SignInEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInEmailView.swift; sourceTree = "<group>"; };
+		779490EB2B9BA11A00AD8C92 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		779E31A32B941AB300644A72 /* WritersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritersListView.swift; sourceTree = "<group>"; };
 		779E31A62B941AFD00644A72 /* WritersListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritersListViewModel.swift; sourceTree = "<group>"; };
 		77AB74842B8F051100FC9A5F /* FilterOptionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionsHandler.swift; sourceTree = "<group>"; };
+		77CBEF9C2B9BF4EF00602B59 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		77D176162B886678000CC8DB /* GenresListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresListViewModel.swift; sourceTree = "<group>"; };
 		77D5C3202B8E97A300A142A4 /* DirectorsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorsListViewModel.swift; sourceTree = "<group>"; };
 		77E2D1812B857ECB00E996E4 /* CineDex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CineDex.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +130,7 @@
 				779490E22B9B9A3C00AD8C92 /* FirebaseAnalyticsSwift in Frameworks */,
 				779490E02B9B9A3C00AD8C92 /* FirebaseAnalytics in Frameworks */,
 				77E2D1B72B857F3100E996E4 /* Alamofire in Frameworks */,
+				779490E52B9B9DFF00AD8C92 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,6 +222,23 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		779490E32B9B9DFF00AD8C92 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		779490E62B9B9E6B00AD8C92 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				779490E72B9B9E8200AD8C92 /* AuthenticationView.swift */,
+				779490E92B9B9FA300AD8C92 /* SignInEmailView.swift */,
+				779490EB2B9BA11A00AD8C92 /* AuthenticationManager.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
 		779AB32B2B9820D700E88E6C /* MovieDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,6 +282,7 @@
 				77E2D1992B857ECE00E996E4 /* CineDexTests */,
 				77E2D1A32B857ECE00E996E4 /* CineDexUITests */,
 				77E2D1822B857ECB00E996E4 /* Products */,
+				779490E32B9B9DFF00AD8C92 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -271,10 +299,12 @@
 		77E2D1832B857ECB00E996E4 /* CineDex */ = {
 			isa = PBXGroup;
 			children = (
+				779490E62B9B9E6B00AD8C92 /* Authentication */,
 				779490DC2B9B98F900AD8C92 /* GoogleService-Info.plist */,
 				779AB32B2B9820D700E88E6C /* MovieDetails */,
 				778CE00F2B8719B6008DF74C /* Filter */,
 				778CE0082B86F96C008DF74C /* Utils */,
+				77CBEF9C2B9BF4EF00602B59 /* RootView.swift */,
 				77E2D1842B857ECB00E996E4 /* CineDexApp.swift */,
 				778CE0002B868D0E008DF74C /* MoviesListView.swift */,
 				778CE0022B868E6D008DF74C /* MoviesGridView.swift */,
@@ -337,6 +367,7 @@
 				77E2D1B62B857F3100E996E4 /* Alamofire */,
 				779490DF2B9B9A3C00AD8C92 /* FirebaseAnalytics */,
 				779490E12B9B9A3C00AD8C92 /* FirebaseAnalyticsSwift */,
+				779490E42B9B9DFF00AD8C92 /* FirebaseAuth */,
 			);
 			productName = CineDex;
 			productReference = 77E2D1812B857ECB00E996E4 /* CineDex.app */;
@@ -458,6 +489,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77302AB32B958F2000428B42 /* CotentRatingListView.swift in Sources */,
+				77CBEF9D2B9BF4EF00602B59 /* RootView.swift in Sources */,
 				778CE0112B8719C9008DF74C /* FilterOptionView.swift in Sources */,
 				770793092B96AA3C00401EDB /* CountriesListViewModel.swift in Sources */,
 				770793022B96972100401EDB /* StudiosListView.swift in Sources */,
@@ -478,6 +510,7 @@
 				770793042B96974F00401EDB /* StudiosListViewModel.swift in Sources */,
 				778CE0032B868E6D008DF74C /* MoviesGridView.swift in Sources */,
 				778CE0162B871CB7008DF74C /* GenresListView.swift in Sources */,
+				779490EC2B9BA11A00AD8C92 /* AuthenticationManager.swift in Sources */,
 				778CE00C2B86FC8C008DF74C /* MoviesViewStyle.swift in Sources */,
 				77E2D1F82B85C87700E996E4 /* MovieDetailViewModel.swift in Sources */,
 				778CE0142B871C31008DF74C /* DirectorsListView.swift in Sources */,
@@ -487,9 +520,11 @@
 				7787B25D2B98FB1700228218 /* Rating.swift in Sources */,
 				778CE00E2B87158B008DF74C /* FilterOptionsView.swift in Sources */,
 				778CE0072B86DB1B008DF74C /* SettingsView.swift in Sources */,
+				779490E82B9B9E8200AD8C92 /* AuthenticationView.swift in Sources */,
 				77E2D1872B857ECB00E996E4 /* MoviesView.swift in Sources */,
 				770793062B96A9A100401EDB /* CountriesListView.swift in Sources */,
 				77E2D1852B857ECB00E996E4 /* CineDexApp.swift in Sources */,
+				779490EA2B9B9FA300AD8C92 /* SignInEmailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -849,6 +884,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 779490DE2B9B9A3C00AD8C92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsSwift;
+		};
+		779490E42B9B9DFF00AD8C92 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 779490DE2B9B9A3C00AD8C92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 		77E2D1B62B857F3100E996E4 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

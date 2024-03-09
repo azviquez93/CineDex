@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
+  @Binding var showSignInView: Bool
   @ObservedObject var moviesViewModel: MoviesViewModel
 
   var body: some View {
@@ -17,7 +18,7 @@ struct MainView: View {
           Label("Películas", systemImage: "popcorn")
         }
 
-      SettingsView(moviesViewModel: moviesViewModel)
+      SettingsView(showSignInView: $showSignInView, moviesViewModel: moviesViewModel)
         .tabItem {
           Label("Ajustes", systemImage: "gear")
         }
