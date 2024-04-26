@@ -45,12 +45,12 @@ struct MoviesListView: View {
               .foregroundColor(.gray)
           }
           VStack(alignment: .leading) {
-            Text(movie.metadata?.originalTitle ?? "Unknown Title")
+            Text(movie.metadata?.title ?? "Unknown Title")
               .font(.headline)
               .lineLimit(1) // Limit to one line
               .truncationMode(.tail) // Truncate at the end
-            if let alternativeTitle = movie.metadata?.alternativeTitle {
-              Text(alternativeTitle)
+            if let originalTitle = movie.metadata?.originalTitle {
+              Text(originalTitle)
                 .font(.subheadline)
                 .lineLimit(1) // Limit to one line
                 .truncationMode(.tail) // Truncate at the end

@@ -12,20 +12,40 @@ final class SignInEmailViewModel: ObservableObject {
   @Published var email = ""
   @Published var password = ""
   
-  func signUp() async throws {
+  func signUp() async throws -> Bool {
     guard !email.isEmpty, !password.isEmpty else {
       print("No email or password found")
-      return
+      return false
     }
-    try await AuthenticationManager.shared.createUser(email: email, password: password)
+    
+    do {
+      _ = try await AuthenticationManager.shared.register(email: email, password: password)
+      print("User registered successful")
+      // Perform any additional actions after sign out
+      return true
+    } catch {
+      print("Registration failed: \(error)")
+      // Handle the error, e.g., show an alert
+      return false
+    }
   }
   
-  func signIn() async throws {
+  func signIn() async throws -> Bool {
     guard !email.isEmpty, !password.isEmpty else {
       print("No email or password found")
-      return
+      return false
     }
-    try await AuthenticationManager.shared.signInUser(email: email, password: password)
+    
+    do {
+      _ = try await AuthenticationManager.shared.signIn(email: email, password: password)
+      print("User logged in successful")
+      // Perform any additional actions after sign out
+      return true
+    } catch {
+      print("Login failed: \(error)")
+      // Handle the error, e.g., show an alert
+      return false
+    }
   }
 }
 
@@ -47,38 +67,33 @@ struct SignInEmailView: View {
         .background(Color.gray.opacity(0.4))
         .cornerRadius(10)
       
-      Button {
+      Button(action: {
         Task {
           do {
-            try await viewModel.signUp()
-            showSignInView = false
-            return
-          }
-          catch {
-            print(error)
-          }
-          
-          do {
-            try await viewModel.signIn()
-            showSignInView = false
-            return
-          }
-          catch {
+            showSignInView = try await viewModel.signIn() == false
+          } catch {
             print(error)
           }
         }
-      } label: {
-        Text("Iniciar sesión")
-          .font(.headline)
-          .foregroundColor(.white)
-          .frame(height: 55)
-          .frame(maxWidth: .infinity)
-          .background(Color.blue)
-          .cornerRadius(10)
+      }
+      ) {
+        LogginButtonContent()
       }
       Spacer()
     }
     .padding()
     .navigationTitle("Iniciar sesión con correo")
+  }
+}
+
+struct LogginButtonContent: View {
+  var body: some View {
+    Text("Iniciar sesión")
+      .font(.headline)
+      .foregroundColor(.white)
+      .frame(height: 55)
+      .frame(maxWidth: .infinity)
+      .background(Color.blue)
+      .cornerRadius(10)
   }
 }

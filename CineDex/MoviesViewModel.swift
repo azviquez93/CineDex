@@ -31,7 +31,7 @@ final class MoviesViewModel: ObservableObject {
     switch sortOption {
     case .year: sortDescriptor = NSSortDescriptor(key: "metadata.year", ascending: ascending)
     case .created: sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: ascending)
-    case .title: sortDescriptor = NSSortDescriptor(key: "metadata.originalTitle", ascending: ascending)
+    case .title: sortDescriptor = NSSortDescriptor(key: "metadata.title", ascending: ascending)
     case .rating:
       if let storedRating = UserDefaults.standard.string(forKey: "rating"),
          let rawValue = Int(storedRating) {
@@ -54,6 +54,9 @@ final class MoviesViewModel: ObservableObject {
         case .none:
           sortDescriptor = NSSortDescriptor(key: "imdb.siteRatingValue", ascending: ascending)
         }
+      }
+      else {
+        sortDescriptor = NSSortDescriptor(key: "imdb.siteRatingValue", ascending: ascending)
       }
       
     }
@@ -81,8 +84,8 @@ final class MoviesViewModel: ObservableObject {
     var predicates: [NSPredicate] = []
     
     if !searchText.isEmpty {
-      let titlePredicate = NSPredicate(format: "metadata.originalTitle CONTAINS[cd] %@", searchText)
-      let alternativeTitlePredicate = NSPredicate(format: "metadata.alternativeTitle CONTAINS[cd] %@", searchText)
+      let titlePredicate = NSPredicate(format: "metadata.title CONTAINS[cd] %@", searchText)
+      let alternativeTitlePredicate = NSPredicate(format: "metadata.originalTitle CONTAINS[cd] %@", searchText)
       
       // Combine the predicates using OR
       let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, alternativeTitlePredicate])

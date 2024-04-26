@@ -27,10 +27,6 @@
 		778CE0112B8719C9008DF74C /* FilterOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0102B8719C9008DF74C /* FilterOptionView.swift */; };
 		778CE0142B871C31008DF74C /* DirectorsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0132B871C31008DF74C /* DirectorsListView.swift */; };
 		778CE0162B871CB7008DF74C /* GenresListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778CE0152B871CB7008DF74C /* GenresListView.swift */; };
-		779490DD2B9B98F900AD8C92 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 779490DC2B9B98F900AD8C92 /* GoogleService-Info.plist */; };
-		779490E02B9B9A3C00AD8C92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 779490DF2B9B9A3C00AD8C92 /* FirebaseAnalytics */; };
-		779490E22B9B9A3C00AD8C92 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 779490E12B9B9A3C00AD8C92 /* FirebaseAnalyticsSwift */; };
-		779490E52B9B9DFF00AD8C92 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 779490E42B9B9DFF00AD8C92 /* FirebaseAuth */; };
 		779490E82B9B9E8200AD8C92 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779490E72B9B9E8200AD8C92 /* AuthenticationView.swift */; };
 		779490EA2B9B9FA300AD8C92 /* SignInEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779490E92B9B9FA300AD8C92 /* SignInEmailView.swift */; };
 		779490EC2B9BA11A00AD8C92 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779490EB2B9BA11A00AD8C92 /* AuthenticationManager.swift */; };
@@ -79,6 +75,7 @@
 		770793052B96A9A100401EDB /* CountriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListView.swift; sourceTree = "<group>"; };
 		770793082B96AA3C00401EDB /* CountriesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesListViewModel.swift; sourceTree = "<group>"; };
 		7707930A2B96E67100401EDB /* SortingMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingMenu.swift; sourceTree = "<group>"; };
+		770CBEF22BB3600D00894996 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77302AB22B958F2000428B42 /* CotentRatingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CotentRatingListView.swift; sourceTree = "<group>"; };
 		77302AB42B95903000428B42 /* ContentRatingsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentRatingsListViewModel.swift; sourceTree = "<group>"; };
 		778169672B90181100AA2B9A /* StarsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarsListView.swift; sourceTree = "<group>"; };
@@ -94,7 +91,6 @@
 		778CE0102B8719C9008DF74C /* FilterOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionView.swift; sourceTree = "<group>"; };
 		778CE0132B871C31008DF74C /* DirectorsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorsListView.swift; sourceTree = "<group>"; };
 		778CE0152B871CB7008DF74C /* GenresListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresListView.swift; sourceTree = "<group>"; };
-		779490DC2B9B98F900AD8C92 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		779490E72B9B9E8200AD8C92 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		779490E92B9B9FA300AD8C92 /* SignInEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInEmailView.swift; sourceTree = "<group>"; };
 		779490EB2B9BA11A00AD8C92 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
@@ -127,10 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				779490E22B9B9A3C00AD8C92 /* FirebaseAnalyticsSwift in Frameworks */,
-				779490E02B9B9A3C00AD8C92 /* FirebaseAnalytics in Frameworks */,
 				77E2D1B72B857F3100E996E4 /* Alamofire in Frameworks */,
-				779490E52B9B9DFF00AD8C92 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,7 +293,6 @@
 			isa = PBXGroup;
 			children = (
 				779490E62B9B9E6B00AD8C92 /* Authentication */,
-				779490DC2B9B98F900AD8C92 /* GoogleService-Info.plist */,
 				779AB32B2B9820D700E88E6C /* MovieDetails */,
 				778CE00F2B8719B6008DF74C /* Filter */,
 				778CE0082B86F96C008DF74C /* Utils */,
@@ -318,6 +310,7 @@
 				77E2D1882B857ECD00E996E4 /* Assets.xcassets */,
 				77E2D18F2B857ECD00E996E4 /* CineDex.xcdatamodeld */,
 				77E2D18A2B857ECD00E996E4 /* Preview Content */,
+				770CBEF22BB3600D00894996 /* Info.plist */,
 			);
 			path = CineDex;
 			sourceTree = "<group>";
@@ -365,9 +358,6 @@
 			name = CineDex;
 			packageProductDependencies = (
 				77E2D1B62B857F3100E996E4 /* Alamofire */,
-				779490DF2B9B9A3C00AD8C92 /* FirebaseAnalytics */,
-				779490E12B9B9A3C00AD8C92 /* FirebaseAnalyticsSwift */,
-				779490E42B9B9DFF00AD8C92 /* FirebaseAuth */,
 			);
 			productName = CineDex;
 			productReference = 77E2D1812B857ECB00E996E4 /* CineDex.app */;
@@ -444,6 +434,7 @@
 			packageReferences = (
 				77E2D1B52B857F3100E996E4 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				779490DE2B9B9A3C00AD8C92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7713ECE22B9C2D9A00EFB31A /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 77E2D1822B857ECB00E996E4 /* Products */;
 			projectDirPath = "";
@@ -463,7 +454,6 @@
 			files = (
 				77E2D18C2B857ECD00E996E4 /* Preview Assets.xcassets in Resources */,
 				77E2D1892B857ECD00E996E4 /* Assets.xcassets in Resources */,
-				779490DD2B9B98F900AD8C92 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,11 +681,13 @@
 				DEVELOPMENT_TEAM = 82Z8897VP2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CineDex/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -720,11 +712,13 @@
 				DEVELOPMENT_TEAM = 82Z8897VP2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CineDex/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -856,6 +850,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7713ECE22B9C2D9A00EFB31A /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		779490DE2B9B9A3C00AD8C92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -875,21 +877,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		779490DF2B9B9A3C00AD8C92 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 779490DE2B9B9A3C00AD8C92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		779490E12B9B9A3C00AD8C92 /* FirebaseAnalyticsSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 779490DE2B9B9A3C00AD8C92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsSwift;
-		};
-		779490E42B9B9DFF00AD8C92 /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 779490DE2B9B9A3C00AD8C92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
 		77E2D1B62B857F3100E996E4 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 77E2D1B52B857F3100E996E4 /* XCRemoteSwiftPackageReference "Alamofire" */;

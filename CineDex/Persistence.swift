@@ -362,8 +362,8 @@ struct PersistenceController {
   private func createMetadata(from metadataInfo: MetadataInfo, in context: NSManagedObjectContext) -> Metadata {
     let metadata = Metadata(context: context)
     metadata.id = metadataInfo.id
-    metadata.alternativeTitle = metadataInfo.alternativeTitle
     metadata.originalTitle = metadataInfo.originalTitle
+    metadata.title = metadataInfo.title
     metadata.artwork = metadataInfo.artwork
     metadata.summary = metadataInfo.summary
     metadata.duration = Int32(metadataInfo.duration ?? 0)

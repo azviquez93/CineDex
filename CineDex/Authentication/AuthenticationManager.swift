@@ -5,19 +5,11 @@
 //  Created by Andrés Zamora on 8/3/24.
 //
 
+import Alamofire
 import Foundation
-import FirebaseAuth
 
-struct AuthDataResultModel {
-  let uid: String
-  let email: String?
-  let photoUrl: String?
-  
-  init(user: User) {
-    self.uid = user.uid
-    self.email = user.email
-    self.photoUrl = user.photoURL?.absoluteString
-  }
+struct AuthDataResultModel: Decodable {
+  let token: String
 }
 
 final class AuthenticationManager {
@@ -25,38 +17,76 @@ final class AuthenticationManager {
   static let shared = AuthenticationManager()
   private init() {}
   
-  @discardableResult
-  func createUser(email: String, password: String) async throws -> AuthDataResultModel {
-    let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
-    return AuthDataResultModel(user: authDataResult.user)
-  }
+  //  @discardableResult
+  //  func createUser(email: String, password: String) async throws -> AuthDataResultModel {
+  //    //let authDataResult = try await Auth.auth().createUser(withEmail: email, password: password)
+  //  }
   
-  @discardableResult
-  func signInUser(email: String, password: String) async throws -> AuthDataResultModel {
-    let authDataResult = try await Auth.auth().signIn(withEmail: email, password: password)
-    return AuthDataResultModel(user: authDataResult.user)
-  }
-  
-  func getAuthenticatedUser() throws -> AuthDataResultModel {
-    guard let user = Auth.auth().currentUser else {
-      throw URLError(.badServerResponse)
+  func getAuthenticatedUser() -> AuthDataResultModel? {
+    guard let token = UserDefaults.standard.object(forKey: "userToken") as? String else {
+      return nil
     }
-    return AuthDataResultModel(user: user)
+    return AuthDataResultModel(token: token)
   }
   
-  func signOut() throws {
-    try Auth.auth().signOut()
+  func register(email: String, password: String) async throws -> AuthDataResultModel {
+    let url = URL(string: "http://192.168.68.100:8000/api/v1/auth/register")!
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    let parameters: [String: Any] = ["name": "Name", "email": email, "password": password]
+    request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+    
+    let (data, _) = try await URLSession.shared.data(for: request)
+    let decoder = JSONDecoder()
+    let authDataResultModel = try decoder.decode(AuthDataResultModel.self, from: data)
+    UserDefaults.standard.set(authDataResultModel.token, forKey: "userToken")
+    
+    return authDataResultModel
   }
   
-  func resetPassword(email: String) async throws {
-    try await Auth.auth().sendPasswordReset(withEmail: email)
+  func signIn(email: String, password: String) async throws -> AuthDataResultModel {
+    let url = URL(string: "http://192.168.68.100:8000/api/v1/auth/login")!
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    let parameters: [String: Any] = ["email": email, "password": password]
+    request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+    
+    let (data, _) = try await URLSession.shared.data(for: request)
+    let decoder = JSONDecoder()
+    let authDataResultModel = try decoder.decode(AuthDataResultModel.self, from: data)
+    UserDefaults.standard.set(authDataResultModel.token, forKey: "userToken")
+    
+    return authDataResultModel
   }
   
-  func updatePassword(password: String) async throws {
-    guard let user = Auth.auth().currentUser else {
-      throw URLError(.badServerResponse)
+  func signOut() async throws {
+    guard let url = URL(string: "http://192.168.68.100:8000/api/v1/auth/logout") else {
+      throw NSError(domain: "Invalid URL", code: -1, userInfo: nil)
     }
-    try await user.updatePassword(to: password)
+    
+    if let token = UserDefaults.standard.string(forKey: "userToken") {
+      var request = URLRequest(url: url)
+      request.httpMethod = "POST"
+      request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+      
+      let (_, response) = try await URLSession.shared.data(for: request)
+      
+      if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+        print("Logout successful")
+        print(token )
+        // Clear user-specific data
+        UserDefaults.standard.removeObject(forKey: "userToken")
+      } else {
+        print("Logout failed")
+        // Handle the error, e.g., show an alert
+      }
+    } else {
+      print("No token found for logout")
+    }
   }
   
 }

@@ -23,7 +23,7 @@ struct RootView: View {
         .environment(\.managedObjectContext, persistenceController.container.viewContext)
     }
     .onAppear {
-      let authUser = try? AuthenticationManager.shared.getAuthenticatedUser()
+      let authUser = AuthenticationManager.shared.getAuthenticatedUser()
       self.showSignInView = authUser == nil
     }
     .fullScreenCover(isPresented: $showSignInView) {

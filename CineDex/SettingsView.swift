@@ -10,20 +10,16 @@ import SwiftUI
 @MainActor
 final class SettingViewModel: ObservableObject {
   func signOut() throws {
-    try AuthenticationManager.shared.signOut()
-  }
-
-  func resetPassword() async throws {
-    let user = try AuthenticationManager.shared.getAuthenticatedUser()
-    guard let email = user.email else {
-      throw URLError(.fileDoesNotExist)
+    Task {
+      do {
+        try await AuthenticationManager.shared.signOut()
+        print("Sign out successful")
+        // Perform any additional actions after sign out
+      } catch {
+        print("Sign out failed: \(error)")
+        // Handle the error, e.g., show an alert
+      }
     }
-    try await AuthenticationManager.shared.resetPassword(email: email)
-  }
-
-  func updatePassword() async throws {
-    let password = "qweasd"
-    try await AuthenticationManager.shared.updatePassword(password: password)
   }
 }
 
@@ -33,9 +29,9 @@ struct SettingsView: View {
   @AppStorage("rating") var rating: Rating = .imdb
   @AppStorage("moviesViewStyle") var moviesViewStyle: MoviesViewStyle = .list
   @ObservedObject var moviesViewModel: MoviesViewModel
-
+  
   @StateObject private var viewModel = SettingViewModel()
-
+  
   var body: some View {
     NavigationStack {
       List {
@@ -67,29 +63,7 @@ struct SettingsView: View {
             refreshArtworks()
           }
         }
-
-        Section("Cuenta") {
-          Button("Cambiar contraseña") {
-            Task {
-              do {
-                try await viewModel.updatePassword()
-                print("Contraseña actualizada")
-              } catch {
-                print(error)
-              }
-            }
-          }
-          Button("Restablecer contraseña") {
-            Task {
-              do {
-                try await viewModel.resetPassword()
-                print("Contraseña reseteada")
-              } catch {
-                print(error)
-              }
-            }
-          }
-        }
+        
         Section {
           Button("Cerrar sesión") {
             Task {
@@ -109,14 +83,14 @@ struct SettingsView: View {
       .listStyle(.grouped)
     }
   }
-
+  
   private func refreshMovies() {
     APIFetchHandler.shared.fetchAPIData {
       FilterOptionsHandler.shared.refreshFilters()
       moviesViewModel.refreshMovies()
     }
   }
-
+  
   private func refreshArtworks() {
     APIFetchHandler.shared.refreshArtworks {
       print("Descarga completa")

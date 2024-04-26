@@ -281,8 +281,8 @@ struct RottentomatoesInfo: Codable {
 
 struct MetadataInfo: Codable {
   let id: Int64
-  let alternativeTitle: String?
-  let originalTitle: String
+  let title: String
+  let originalTitle: String?
   let artwork: String?
   let summary: String?
   let duration: Int?
@@ -291,8 +291,8 @@ struct MetadataInfo: Codable {
   
   enum CodingKeys: String, CodingKey {
     case id
-    case alternativeTitle = "alternative_title"
     case originalTitle = "original_title"
+    case title = "title"
     case artwork
     case summary
     case duration

@@ -9,7 +9,7 @@ struct MovieDetailView: View {
   
   var body: some View {
     List {
-      Text(viewModel.movie.metadata?.originalTitle ?? "Unknown Title")
+      Text(viewModel.movie.metadata?.title ?? "Unknown Title")
         .font(.title)
         .padding()
         
@@ -38,7 +38,7 @@ struct MovieDetailView_Previews: PreviewProvider {
     // You can create a sample Movie object for preview
     let sampleMovie = Movie(context: PersistenceController.preview.container.viewContext)
     sampleMovie.metadata = Metadata(context: PersistenceController.preview.container.viewContext)
-    sampleMovie.metadata?.originalTitle = "Sample Movie"
+    sampleMovie.metadata?.title = "Sample Movie"
     sampleMovie.metadata?.year = 2022
     sampleMovie.metadata?.summary = "This is a sample movie summary."
     

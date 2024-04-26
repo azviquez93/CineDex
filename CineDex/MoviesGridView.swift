@@ -45,7 +45,7 @@ struct MoviesGridView: View {
                   .frame(width: 80, height: 120)
                   .cornerRadius(10)
                 }
-                Text(movie.metadata?.originalTitle ?? "")
+                Text(movie.metadata?.title ?? "")
                   .font(.subheadline)
                   .foregroundColor(.primary)
                   .lineLimit(1) // Limit to one line
